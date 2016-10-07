@@ -21,15 +21,6 @@ This can only be run for a device, not for a simulator.
 
 See CommercialDemoProject for an example of this.
  
-GETTING STARTED
-
-APP TOKEN
-goTenna uses an App Token to differentiate between different apps on the network. Apps can only communicate with other apps that use the same App Token. This allows an app to coexist with the goTenna app, but not intermix the messages being received.
-
-Before you can use the sdk, you must setup your application token. This must be done before you use any other methods from the SDK, and is ideally done inside a custom Application class, or the very first launched Activity in your app. You must set your application token before attempting to pair with a goTenna. Pairing occurs via the GTConnectionManager. See class documentation and the example app for reference on how to interact with the GTConnectionManager.
-
-Previously we supplied a default developer App Token, however that Token will be terminated and all developers will be required to request a unique App Token from http://www.gotenna.com/pages/sdk
- 
 CONNECTING/DISCONNECTING
  
 You application pairs with a goTenna over BTLE. Confirm your hardware has BTLE capabilities before beginning.
