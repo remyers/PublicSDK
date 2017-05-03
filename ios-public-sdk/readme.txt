@@ -39,7 +39,7 @@ The goTenna sdk allows an app developer to easily get up and running using a net
 Messages may be optionally encrypted using default functionality provided by the SDK.
  
 MESSAGES
-- Outgoing messages are limited in size to 256 bytes
+- Outgoing messages are limited in size to 236 bytes
 - There is currently a limit of sending only 5 messages per minute. This is to prevent developers from flooding the radio channels with their own app's content, potnetially blocking other apps from communicating.
  
 Message Types
