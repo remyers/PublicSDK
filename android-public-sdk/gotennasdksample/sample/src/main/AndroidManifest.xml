@@ -3,14 +3,14 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".MyApp"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.PairingActivity"
+            android:name=".scan.ScanActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,27 +19,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SdkOptionsActivity"
+            android:name=".options.SdkOptionsActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.SetGidActivity"
+            android:name=".gid.SetGidActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.PrivateMessageActivity"
+            android:name=".messages.PrivateMessagesActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.BroadcastMessageActivity"
+            android:name=".messages.BroadcastMessagesActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.CreateGroupActivity"
+            android:name=".groups.CreateGroupActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.GroupMessageActivity"
+            android:name=".groups.GroupMessagesActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

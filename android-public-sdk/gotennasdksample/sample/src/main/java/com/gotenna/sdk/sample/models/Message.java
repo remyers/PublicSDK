@@ -6,23 +6,22 @@ import com.gotenna.sdk.exceptions.GTDataMissingException;
 import com.gotenna.sdk.messages.GTBaseMessageData;
 import com.gotenna.sdk.messages.GTTextOnlyMessageData;
 import com.gotenna.sdk.sample.managers.ContactsManager;
-import com.gotenna.sdk.user.User;
-import com.gotenna.sdk.user.UserDataStore;
 
 import java.util.Date;
 
 /**
- * A model class that represent a sent or received message.
+ * A model class that represents a sent or received message.
  *
  * Created on 2/10/16
  *
  * @author ThomasColligan
  */
+
 public class Message
 {
-    // ================================================================================
+    //==============================================================================================
     // Class Properties
-    // ================================================================================
+    //==============================================================================================
 
     private static final String LOG_TAG = "Message";
 
@@ -32,6 +31,7 @@ public class Message
     private String text;
     private MessageStatus messageStatus;
     private String detailInfo;
+    private int hopCount;
 
     public enum MessageStatus
     {
@@ -40,9 +40,9 @@ public class Message
         ERROR_SENDING
     }
 
-    // ================================================================================
+    //==============================================================================================
     // Constructor
-    // ================================================================================
+    //==============================================================================================
 
     public Message(long senderGID, long receiverGID, Date sentDate, String text, MessageStatus messageStatus, String detailInfo)
     {
@@ -54,9 +54,9 @@ public class Message
         this.detailInfo = detailInfo;
     }
 
-    // ================================================================================
+    //==============================================================================================
     // Class Instance Methods
-    // ================================================================================
+    //==============================================================================================
 
     public long getSenderGID()
     {
@@ -116,21 +116,19 @@ public class Message
         return gtTextOnlyMessageData.serializeToBytes();
     }
 
-    public boolean currentUserIsSender()
+    public void setHopCount(int hopCount)
     {
-        User currentUser = UserDataStore.getInstance().getCurrentUser();
-
-        if (currentUser != null)
-        {
-            return senderGID == currentUser.getGID();
-        }
-
-        return false;
+        this.hopCount = hopCount;
     }
 
-    // ================================================================================
+    public int getHopCount()
+    {
+        return hopCount;
+    }
+
+    //==============================================================================================
     // Static Helper Methods
-    // ================================================================================
+    //==============================================================================================
 
     public static Message createReadyToSendMessage(long senderGID, long receiverGID, String text)
     {

@@ -8,11 +8,6 @@ javadocs/index.html  - start point for viewing the SDK documentation
 
 Requires Android OS 4.3+
 
-KNOWN ISSUES
-This is a beta release, your feedback matters! We expect to make updates based on feedback before the SDK is released to the public.
-
-1. We plan to add a notification that there is a firmware update available for the goTenna. The feature already exists to perform the firmware update, but the additional feature will notify when its available and if its a critical update. 
-
 INSTALLATION
  
 To install, you must import the .aar file into your AndroidStudio/Eclipse project.
@@ -54,3 +49,27 @@ Message Types
     - sending a message to group created with a finite number of members (< 10)
     - see example app for creating a group and being notified of being added to a group
     - sender does not receive any acknowledgements of receipt by receivers
+
+MESH SDK UPDATE NOTES
+
+What is going to break by updating to this new SDK?
+- The SDK Method User.getGroupGIDs() now returns a List instead of an ArrayList, you will need to update your code to reflect that minor SDK change.
+- Firmware Updates will still work, but before you do an update make sure you specify which determine which device you are using Mesh vs. V1, and supply the correct param to GTFirmwareAmazonDownloader.setAmazonFirmwareBucket. If no param is specified, it will default to the V1 goTenna.
+
+How do I connect to a goTenna Mesh vs. V1 goTenna?
+- Previously, to start the goTenna pairing proces, you would call GTConnectionManager.getInstance().scanAndConnect();
+Now there is an additiona function scanAndConnect(GTDeviceType deviceType), and in this function you can specify GTDeviceType.V1 or GTDeviceType.MESH.
+The old function will automatically use V1 by default.
+
+IMPORTANT DETAILS ON OPERATING REGIONS
+
+The goTenna Mesh was created to operate according to FCC Regulations on a per region basis. This means that inorder to use the goTenna Mesh properly, you must determine which region you are in and tell the goTenna so that it can use the proper transmit frequencies designated for that region.
+
+Currently supported regions are: 
+    NORTH_AMERICA,
+    EUROPE,
+    AUSTRALIA,
+    NEW_ZEALAND,
+    SINGAPORE.
+
+After determining which region you are in, simply call the function GTCommandCenter.getInstance.sendSetGeoRegion(Place.NORTH_AMERICA); This will tell the goTenna mesh which region it is in, and it will alter its transmit frequencies accordingly.

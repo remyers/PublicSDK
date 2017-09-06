@@ -10,22 +10,28 @@
     <string name="error_sending_message">There was an error sending your message. Please try again!</string>
     <string name="placeholder_text">Placeholder Text</string>
     <string name="chat_cell_info">%1$s on %2$s</string>
+    <string name="chat_cell_info_hop">%1$s on %2$s with %3$d hop(s)</string>
+    <string name="chat_cell_with_hops">%1$s with %2$d hop(s)</string>
     <string name="invited_to_group_toast_text">You were invited to a group with the GID %1$d</string>
     <string name="echo_success_toast">Echo Success</string>
     <string name="echo_nack_toast">Echo NACK</string>
     <string name="echo_error_toast">Echo ERROR</string>
+    <string name="firmware_not_downloaded_message">Latest firmware not downloaded. Please check your Internet connection.</string>
     <string name="firmware_is_already_updated_toast_text">Firmware is already up to date!</string>
+    <string name="done_action">Done</string>
+    <string name="empty_message">Please enter a message!</string>
 
-    <!-- Pairing Activity Strings -->
-    <string name="remember_gotenna_switch_text">Remember goTenna:</string>
-    <string name="search_button_text">Start scanning for a goTenna</string>
+    <!-- Scan Activity Strings -->
+    <string name="scan_new_gotenna">SCAN FOR NEW GOTENNA</string>
+    <string name="scan_previous_gotenna">SCAN FOR PREVIOUSLY USED GOTENNA</string>
+    <string name="invalid_sdk_token">goTenna SDK Token is INVALID! Please rebuild the sample app with a valid token. You may need to re-launch the app twice for the token to validate properly.</string>
+    <string name="choose_gotenna_type">Choose goTenna Type</string>
+    <string name="gotenna_v1_choice">goTenna V1</string>
+    <string name="gotenna_mesh_choice">goTenna Mesh</string>
+    <string name="bluetooth_not_supported">Bluetooth not supported on this device!</string>
     <string name="searching_for_gotenna">Scanning for goTenna&#8230;</string>
-    <string name="toast_could_not_find_gotenna">Could not find goTenna!</string>
-    <string name="toast_stopped_scanning">Stopped scanning!</string>
-    <string name="title_activity_permissions">PermissionsActivity</string>
-    <string name="no_bluetooth_support_message">Your Device does not support Bluetooth. This application will not work with your device!</string>
-    <string name="disabled_bluetooth_message">This app has limited functionality with Bluetooth disabled. Please enable Bluetooth!</string>
-    <string name="enabled_bluetooth_message">Bluetooth was successfully enabled!</string>
+    <string name="unable_to_find_gotenna_after_scanning">Unable to find goTenna after scanning for %d seconds. Make sure the goTenna is on and try again!</string>
+    <string name="bluetooth_was_enabled">Bluetooth was enabled. Tap scan for goTenna button again!</string>
 
     <!-- SDK Options Activity Strings -->
     <string name="send_echo_button_text">Send Echo</string>
@@ -37,13 +43,15 @@
     <string name="send_group_message_button_text">Send Group Message</string>
     <string name="disconnect_button_text">Disconnect</string>
     <string name="update_firmware_button_text">Update Firmware</string>
+    <string name="system_info_error">System Info Retrieval Error</string>
 
     <!-- Set GID Activity -->
-    <string name="current_username_text">Username: %1$s</string>
-    <string name="current_gid_text">GID: %1$s</string>
+    <string name="current_username_text">Username: %s</string>
+    <string name="current_gid_text">GID: %s</string>
     <string name="change_user_button_text">Change User</string>
     <string name="select_user_dialog_title">Select a User</string>
     <string name="set_gid_success_toast_text">Set GID Successfully!</string>
+    <string name="must_select_user_warning">You must select a user before you can set the GID!</string>
 
     <!-- Private Message GID Activity -->
     <string name="receiver_text">Receiver: %1$s</string>
@@ -61,6 +69,8 @@
     <string name="group_invite_state_not_received">Did Not Receive Invite</string>
     <string name="resend_invite_button_text">Resend Invite</string>
     <string name="select_group_dialog_title">Select a Group</string>
+    <string name="error_creating_group">Error creating group: %s</string>
+    <string name="error_inviting_member">Error inviting member with GID: %d</string>
 
     <!-- Send Group Message Activity -->
     <string name="selected_group_text">Selected Group GID: %1$d</string>

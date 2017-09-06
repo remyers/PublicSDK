@@ -1,7 +1,9 @@
 com.gotenna.sdk
 com.gotenna.sdk.bluetooth
 com.gotenna.sdk.commands
+com.gotenna.sdk.exceptions
 com.gotenna.sdk.firmware
+com.gotenna.sdk.gids
 com.gotenna.sdk.interfaces
 com.gotenna.sdk.messages
 com.gotenna.sdk.responses
