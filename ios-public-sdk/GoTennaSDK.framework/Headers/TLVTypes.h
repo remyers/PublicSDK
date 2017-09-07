@@ -21,11 +21,6 @@ extern NSNumber *TLV_TYPE_LOCATION_LONGITUDE;
 extern NSNumber *TLV_TYPE_LOCATION_TYPE;
 extern NSNumber *TLV_TYPE_LOCATION_GPS_TIMESTAMP;
 
-// Network Relay
-extern NSNumber *TLV_TYPE_NET_RELAY_UUID;
-extern NSNumber *TLV_TYPE_NET_RELAY_PHONE_NUMBER;
-extern NSNumber *TLV_TYPE_NET_RELAY_MESSAGE;
-
 // GroupCreationMessageData
 extern NSNumber *TLV_TYPE_GROUP_GID;
 extern NSNumber *TLV_TYPE_GROUP_MEMBER_LIST;
