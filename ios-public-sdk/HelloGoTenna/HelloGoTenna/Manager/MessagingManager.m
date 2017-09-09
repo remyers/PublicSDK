@@ -269,15 +269,6 @@ NSString * const kGroupCreatedNotificationSender = @"kGroupCreatedNotification";
     };
     
     [[GTCommandCenter shared] sendMessage:[message toBytes] toGID:message.receiverGID fromGID:message.senderGID onResponse:onResponse onError:onError];
-    
-    // Multicast message
-    //    [[GTCommandCenter shared] sendMessage:[message toBytes]
-    //            toGID:@123456789000
-    //          fromGID:[[UserDataStore shared] currentUser].gId
-    //       onResponse:onResponse
-    //          onError:onError
-    //      maxHopCount:[GTConfig maxHopCount] shouldNotResendWithMoreHops:NO
-    //         resendID:-1 willEncrypt:NO];
 }
 
 # pragma mark - Helpers
