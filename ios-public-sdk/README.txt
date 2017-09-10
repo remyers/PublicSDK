@@ -13,6 +13,7 @@ INSTALLATION OF iOS SDK
 To install, you must import the .framework file into your Xcode project.
 You can do this by dragging the .framework file into General tab of your target, drag it into the ‘Embedded Binaries’ section so it appears in both ‘Embedded Binaries’ and ‘Linked Frameworks and Libraries’.
 You must also make sure Enable Bitcode in the build settings is set to NO. The .framework should warn you if you forget to do this.
+Lastly, in build settings, set 'Allow Non-modular Includes in Framework Modules' to Yes.
 
 This can only be run for a device, not for a simulator.
 
