@@ -1,5 +1,5 @@
 # PublicSDK
-Public Android and iOS SDK's for the goTenna
+Public Android, iOS and Python SDK's for the goTenna
 
 First read [goTennaSDKIntro.pdf](goTennaSDKIntro.pdf)
 
