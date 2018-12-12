@@ -100,7 +100,7 @@ Battery level can be obtained by calling GTCommandCenter.sendGetSystemInfo(). Th
 
 ## MESH SDK UPDATE NOTES
 
-This update has significant changes that requires existing SDK users to fix package imports and replace class usage. Please view [Android Upgrade Guide](https://gotenna.github.io/PublicSDK/android-public-sdk/goTenna Pro SDK Upgrade Guide Android/) for a detailed upgrade guide.
+This update has significant changes that requires existing SDK users to fix package imports and replace class usage. Please view [Android Upgrade Guide](https://github.com/gotenna/PublicSDK/blob/master/android-public-sdk/goTenna%20Pro%20SDK%20Upgrade%20Guide%20Android.pdf) for a detailed upgrade guide.
 
 How do I connect to a goTenna?
 
