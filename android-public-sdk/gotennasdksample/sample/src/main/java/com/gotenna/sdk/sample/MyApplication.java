@@ -10,7 +10,7 @@ import com.gotenna.sdk.sample.managers.IncomingMessagesManager;
 
 /**
  * Overridden Application class where we start up the goTenna SDK.
- * <p>
+ *
  * Created on 2/10/16
  *
  * @author ThomasColligan

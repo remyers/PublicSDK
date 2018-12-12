@@ -1,17 +1,17 @@
 package com.gotenna.sdk.sample.groups;
 
-import com.gotenna.sdk.commands.GTCommandCenter;
-import com.gotenna.sdk.commands.GTCommandCenter.GTGroupInviteErrorListener;
-import com.gotenna.sdk.commands.GTCommandCenter.GTGroupInviteResponseListener;
-import com.gotenna.sdk.commands.GTError;
+import com.gotenna.sdk.data.GTCommandCenter;
+import com.gotenna.sdk.data.GTCommandCenter.GTGroupInviteErrorListener;
+import com.gotenna.sdk.data.GTCommandCenter.GTGroupInviteResponseListener;
+import com.gotenna.sdk.data.GTError;
+import com.gotenna.sdk.data.GTResponse;
+import com.gotenna.sdk.data.GTResponse.GTCommandResponseCode;
+import com.gotenna.sdk.data.user.User;
+import com.gotenna.sdk.data.user.UserDataStore;
 import com.gotenna.sdk.exceptions.GTDataMissingException;
-import com.gotenna.sdk.responses.GTResponse;
+import com.gotenna.sdk.sample.groups.GroupInvitationViewModel.GroupInvitationState;
 import com.gotenna.sdk.sample.managers.ContactsManager;
 import com.gotenna.sdk.sample.models.Contact;
-import com.gotenna.sdk.sample.groups.GroupInvitationViewModel.GroupInvitationState;
-import com.gotenna.sdk.types.GTDataTypes;
-import com.gotenna.sdk.user.User;
-import com.gotenna.sdk.user.UserDataStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,7 +251,7 @@ class CreateGroupPresenter implements GTGroupInviteResponseListener, GTGroupInvi
     @Override
     public void onMemberResponse(GTResponse response, long memberGID)
     {
-        if (response.getResponseCode() == GTDataTypes.GTCommandResponseCode.POSITIVE)
+        if (response.getResponseCode() == GTCommandResponseCode.POSITIVE)
         {
             updateGroupMemberInvitationState(memberGID, GroupInvitationState.RECEIVED);
         }

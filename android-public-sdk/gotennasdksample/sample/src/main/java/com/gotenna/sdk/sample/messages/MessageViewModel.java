@@ -4,8 +4,8 @@ import com.gotenna.sdk.sample.MyApplication;
 import com.gotenna.sdk.sample.R;
 import com.gotenna.sdk.sample.models.Message;
 import com.gotenna.sdk.sample.models.Message.MessageStatus;
-import com.gotenna.sdk.user.User;
-import com.gotenna.sdk.user.UserDataStore;
+import com.gotenna.sdk.data.user.User;
+import com.gotenna.sdk.data.user.UserDataStore;
 
 /**
  * A view model for displaying messages.

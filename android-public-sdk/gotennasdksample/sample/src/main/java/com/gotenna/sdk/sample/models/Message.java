@@ -3,8 +3,8 @@ package com.gotenna.sdk.sample.models;
 import android.util.Log;
 
 import com.gotenna.sdk.exceptions.GTDataMissingException;
-import com.gotenna.sdk.messages.GTBaseMessageData;
-import com.gotenna.sdk.messages.GTTextOnlyMessageData;
+import com.gotenna.sdk.data.messages.GTBaseMessageData;
+import com.gotenna.sdk.data.messages.GTTextOnlyMessageData;
 import com.gotenna.sdk.sample.managers.ContactsManager;
 
 import java.util.Date;

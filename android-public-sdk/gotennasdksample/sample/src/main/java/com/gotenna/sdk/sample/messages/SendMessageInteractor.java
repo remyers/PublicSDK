@@ -5,15 +5,15 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.gotenna.sdk.commands.GTCommand.GTCommandResponseListener;
-import com.gotenna.sdk.commands.GTCommandCenter;
-import com.gotenna.sdk.commands.GTError;
-import com.gotenna.sdk.interfaces.GTErrorListener;
-import com.gotenna.sdk.responses.GTResponse;
+import com.gotenna.sdk.data.GTCommandCenter;
+import com.gotenna.sdk.data.GTError;
+import com.gotenna.sdk.data.GTErrorListener;
+import com.gotenna.sdk.data.GTResponse.GTCommandResponseCode;
+import com.gotenna.sdk.data.GTSendCommandResponseListener;
+import com.gotenna.sdk.data.GTSendMessageResponse;
 import com.gotenna.sdk.sample.models.Message;
 import com.gotenna.sdk.sample.models.Message.MessageStatus;
-import com.gotenna.sdk.types.GTDataTypes.GTCommandResponseCode;
-import com.gotenna.sdk.utils.Utils;
+import com.gotenna.sdk.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,10 +107,10 @@ public class SendMessageInteractor
 
     private void sendBroadcast(final SendMessageItem sendMessageItem)
     {
-        gtCommandCenter.sendBroadcastMessage(sendMessageItem.message.toBytes(), new GTCommandResponseListener()
+        gtCommandCenter.sendBroadcastMessage(sendMessageItem.message.toBytes(), new GTSendCommandResponseListener()
         {
             @Override
-            public void onResponse(GTResponse response)
+            public void onSendResponse(GTSendMessageResponse response)
             {
                 // All broadcasts only travel 1 hop max, so you can ignore this number
                 int hopCount = response.getHopCount();
@@ -136,7 +136,7 @@ public class SendMessageInteractor
             {
                 if (error.getCode() == GTError.DATA_RATE_LIMIT_EXCEEDED)
                 {
-                    Log.w(TAG, String.format(Locale.US, "Data rate limit was exceeded. Resending message in %d seconds", MESSAGE_RESEND_DELAY_MILLISECONDS / Utils.MILLISECONDS_PER_SECOND));
+                    Log.w(TAG, String.format(Locale.US, "Data rate limit was exceeded. Resending message in %d seconds", MESSAGE_RESEND_DELAY_MILLISECONDS / TimeUtils.MILLISECONDS_PER_SECOND));
                     attemptToResendWithDelay();
                 }
                 else
@@ -153,10 +153,10 @@ public class SendMessageInteractor
 
     private void sendMessage(final SendMessageItem sendMessageItem)
     {
-        gtCommandCenter.sendMessage(sendMessageItem.message.toBytes(), sendMessageItem.message.getReceiverGID(), new GTCommandResponseListener()
+        gtCommandCenter.sendMessage(sendMessageItem.message.toBytes(), sendMessageItem.message.getReceiverGID(), new GTSendCommandResponseListener()
         {
             @Override
-            public void onResponse(GTResponse response)
+            public void onSendResponse(GTSendMessageResponse response)
             {
                 // For goTenna Mesh, responses will have a hop count to indicate how many hops the unit took to reach its destination
                 // A direct A -> B transaction is 1 hop, A -> B -> C is 2 hops, etc...
@@ -185,7 +185,7 @@ public class SendMessageInteractor
             {
                 if (error.getCode() == GTError.DATA_RATE_LIMIT_EXCEEDED)
                 {
-                    Log.w(TAG, String.format(Locale.US, "Data rate limit was exceeded. Resending message in %d seconds", MESSAGE_RESEND_DELAY_MILLISECONDS / Utils.MILLISECONDS_PER_SECOND));
+                    Log.w(TAG, String.format(Locale.US, "Data rate limit was exceeded. Resending message in %d seconds", MESSAGE_RESEND_DELAY_MILLISECONDS / TimeUtils.MILLISECONDS_PER_SECOND));
                     attemptToResendWithDelay();
                 }
                 else

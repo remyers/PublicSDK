@@ -1,8 +1,8 @@
 package com.gotenna.sdk.sample.managers;
 
 import com.gotenna.sdk.sample.models.Contact;
-import com.gotenna.sdk.user.User;
-import com.gotenna.sdk.user.UserDataStore;
+import com.gotenna.sdk.data.user.User;
+import com.gotenna.sdk.data.user.UserDataStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,10 @@ public class ContactsManager
         contactArrayList = new ArrayList<>();
 
         // Add demo contacts
-        contactArrayList.add(new Contact("Alice", 678912313L));
-        contactArrayList.add(new Contact("Bob", 4321123123L));
-        contactArrayList.add(new Contact("Carol", 8132131231L));
-        contactArrayList.add(new Contact("Doug", 5926534234L));
+        contactArrayList.add(new Contact("Alice", 123456789));
+        contactArrayList.add(new Contact("Bob", 987654321));
+        contactArrayList.add(new Contact("Carol", 1123581321));
+        contactArrayList.add(new Contact("Doug", 314159265));
     }
 
     private static class SingletonHelper

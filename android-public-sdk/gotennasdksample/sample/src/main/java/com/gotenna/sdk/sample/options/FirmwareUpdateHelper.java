@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.gotenna.sdk.bluetooth.GTConnectionManager;
+import com.gotenna.sdk.connection.GTConnectionManager;
+import com.gotenna.sdk.data.GTDeviceType;
+import com.gotenna.sdk.firmware.AmazonFirmwareBucket;
 import com.gotenna.sdk.firmware.GTFirmwareAmazonDownloader;
 import com.gotenna.sdk.firmware.GTFirmwareUpdater;
 import com.gotenna.sdk.firmware.GTFirmwareUpdater.FirmwareUpdateState;
@@ -65,16 +70,10 @@ class FirmwareUpdateHelper implements GTFirmwareUpdaterListener
     // Class Instance Methods
     //==============================================================================================
 
-    boolean hasLatestFirmwareVersion()
-    {
-        return latestFirmwareVersion != null;
-    }
-
     boolean shouldDoFirmwareUpdate(SystemInfoResponseData systemInfoResponseData)
     {
         return latestFirmwareVersion != null &&
                 systemInfoResponseData.getFirmwareVersion().isLessThan(latestFirmwareVersion);
-
     }
 
     void showFirmwareUpdateDialog(SystemInfoResponseData currentSystemInfo)
@@ -103,40 +102,76 @@ class FirmwareUpdateHelper implements GTFirmwareUpdaterListener
                 .show();
     }
 
-    void checkForNewFirmwareFile()
+    void checkForNewFirmwareFile(@NonNull final GTFirmwareVersion currentGotennaFirmwareVersion,
+                                 @NonNull final FirmwareFileDownloadListener firmwareFileDownloadListener)
     {
         firmwareAmazonDownloader = new GTFirmwareAmazonDownloader();
 
         // Make sure we ask the correct Amazon Bucket for the correct firmware, dont want to update a V1 with Mesh firmware!
-        GTConnectionManager.GTDeviceType gtDeviceType = GTConnectionManager.getInstance().getDeviceType();
-        GTFirmwareAmazonDownloader.AmazonFirmwareBucket bucket = null;
+        GTDeviceType gtDeviceType = GTConnectionManager.getInstance().getDeviceType();
+        AmazonFirmwareBucket bucket = null;
         switch (gtDeviceType)
         {
             case V1:
-                bucket = GTFirmwareAmazonDownloader.AmazonFirmwareBucket.V1_PRODUCTION;
+                bucket = AmazonFirmwareBucket.V1_PRODUCTION;
                 break;
             case MESH:
-                bucket = GTFirmwareAmazonDownloader.AmazonFirmwareBucket.MESH_PRODUCTION;
+                bucket = AmazonFirmwareBucket.MESH_PRODUCTION;
+                break;
+            case PRO:
+                bucket = AmazonFirmwareBucket.PRO_PRODUCTION;
                 break;
         }
 
         firmwareAmazonDownloader.setAmazonFirmwareBucket(bucket);
 
-        firmwareAmazonDownloader.checkForNewFirmware(new GTFirmwareAmazonDownloader.GTFirmwareAmazonDownloaderListener()
-        {
-            @Override
-            public void onDownloadedNewFirmwareFile(GTFirmwareVersion firmwareVersion, GTFirmwareUpdater firmwareUpdater)
-            {
-                latestFirmwareVersion = firmwareVersion;
-                latestFirmwareFileUpdater = firmwareUpdater;
-            }
+        firmwareAmazonDownloader.checkForNewFirmware(currentGotennaFirmwareVersion,
+                new GTFirmwareAmazonDownloader.GTFirmwareAmazonDownloaderListener()
+                {
+                    @Override
+                    public void onDownloadedNewFirmwareFile(@NonNull GTFirmwareVersion firmwareVersion,
+                                                            @NonNull GTFirmwareUpdater firmwareUpdater)
+                    {
+                        latestFirmwareVersion = firmwareVersion;
+                        latestFirmwareFileUpdater = firmwareUpdater;
+                        firmwareFileDownloadListener.onFirmwareFileDownloaded();
+                    }
 
-            @Override
-            public void onFailedToDownloadNewFirmwareFile()
-            {
-                Log.w(LOG_TAG, "Failed to download latest firmware file");
-            }
-        });
+                    @Override
+                    public void onFailedToDownloadNewFirmwareFile()
+                    {
+                        Log.w(LOG_TAG, "Failed to download latest firmware file");
+                        firmwareFileDownloadListener.onFirmwareFileDownloadFailed();
+                    }
+
+                    @Override
+                    public void onFirmwareUpdateUnavailableDueToNrf()
+                    {
+                        new AlertDialog.Builder(activity)
+                                .setTitle(R.string.firmware_update_dialog_title_error)
+                                .setMessage(R.string.firmware_update_nrf_unavailable)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        dialog.cancel();
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setData(Uri.parse(
+                                                "https://play.google.com/store/apps/details?id=com.gotenna.gotenna"));
+                                        intent.setPackage("com.android.vending");
+                                        activity.startActivity(intent);
+                                    }
+                                })
+                                .show();
+                    }
+                });
+    }
+
+    public interface FirmwareFileDownloadListener
+    {
+        void onFirmwareFileDownloaded();
+        void onFirmwareFileDownloadFailed();
     }
 
     private void startFirmwareUpdateUsingLatest()
@@ -171,7 +206,7 @@ class FirmwareUpdateHelper implements GTFirmwareUpdaterListener
     //==============================================================================================
 
     @Override
-    public void onFirmwareWritingStateUpdated(final FirmwareUpdateState firmwareUpdateState)
+    public void onFirmwareWritingStateUpdated(@NonNull final FirmwareUpdateState firmwareUpdateState)
     {
         activity.runOnUiThread(new Runnable()
         {

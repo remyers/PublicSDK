@@ -1,6 +1,6 @@
 <resources>
     <!-- General Strings -->
-    <string name="app_name">GoTennaSDKSample</string>
+    <string name="app_name">goTenna SDK Sample</string>
     <string name="error_occurred">An Error Occurred</string>
     <string name="error_occurred_param">An Error Occurred: %1$s</string>
     <string name="invalid_input">Invalid Input!</string>
@@ -20,18 +20,22 @@
     <string name="firmware_is_already_updated_toast_text">Firmware is already up to date!</string>
     <string name="done_action">Done</string>
     <string name="empty_message">Please enter a message!</string>
+    <string name="cannot_find_place">Unable to find location. Defaulting Mesh Frequencies to North America</string>
+    <string name="error_setting_frequencies">Error setting goTenna Frequencies. Disconnect and try again.</string>
 
     <!-- Scan Activity Strings -->
     <string name="scan_new_gotenna">SCAN FOR NEW GOTENNA</string>
     <string name="scan_previous_gotenna">SCAN FOR PREVIOUSLY USED GOTENNA</string>
     <string name="invalid_sdk_token">goTenna SDK Token is INVALID! Please rebuild the sample app with a valid token. You may need to re-launch the app twice for the token to validate properly.</string>
     <string name="choose_gotenna_type">Choose goTenna Type</string>
-    <string name="gotenna_v1_choice">goTenna V1</string>
     <string name="gotenna_mesh_choice">goTenna Mesh</string>
+    <string name="gotenna_pro_choice">goTenna Pro</string>
     <string name="bluetooth_not_supported">Bluetooth not supported on this device!</string>
     <string name="searching_for_gotenna">Scanning for goTenna&#8230;</string>
     <string name="unable_to_find_gotenna_after_scanning">Unable to find goTenna after scanning for %d seconds. Make sure the goTenna is on and try again!</string>
     <string name="bluetooth_was_enabled">Bluetooth was enabled. Tap scan for goTenna button again!</string>
+    <string name="x_check_error">An error has occurred while checking if your device is X enabled.</string>
+    <string name="not_x_device">The connected device is not a goTenna X device. Please verify if the serial number %1$s has been X enabled.</string>
 
     <!-- SDK Options Activity Strings -->
     <string name="send_echo_button_text">Send Echo</string>
@@ -82,6 +86,8 @@
     <string name="firmware_update_dialog_message">Update your goTenna\'s Firmware from %1$s to %2$s? This may take anywhere from 10&#8211;15 minutes to complete.</string>
     <string name="firmware_update_dialog_begin_update">BEGIN UPDATE</string>
     <string name="firmware_update_dialog_no">No</string>
+    <string name="firmware_update_dialog_title_error">FIRMWARE UPDATE ERROR</string>
+    <string name="firmware_update_nrf_unavailable">This goTenna Mesh device is on an older version of the firmware that requires a special NRF firmware update. Please use the official goTenna app to do this firmware update.</string>
 
     <!-- Firmware Update Progress Dialog -->
     <string name="firmware_update_progress_dialog_title">Firmware Update</string>

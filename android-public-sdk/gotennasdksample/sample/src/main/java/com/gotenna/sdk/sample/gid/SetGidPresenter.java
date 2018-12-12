@@ -1,16 +1,15 @@
 package com.gotenna.sdk.sample.gid;
 
-import com.gotenna.sdk.commands.GTCommand.GTCommandResponseListener;
-import com.gotenna.sdk.commands.GTCommandCenter;
-import com.gotenna.sdk.commands.GTError;
-import com.gotenna.sdk.interfaces.GTErrorListener;
-import com.gotenna.sdk.responses.GTResponse;
+import com.gotenna.sdk.data.GTCommand.GTCommandResponseListener;
+import com.gotenna.sdk.data.GTCommandCenter;
+import com.gotenna.sdk.data.GTError;
+import com.gotenna.sdk.data.GTErrorListener;
+import com.gotenna.sdk.data.GTResponse;
 import com.gotenna.sdk.sample.ContactViewModel;
 import com.gotenna.sdk.sample.managers.ContactsManager;
 import com.gotenna.sdk.sample.models.Contact;
-import com.gotenna.sdk.types.GTDataTypes;
-import com.gotenna.sdk.user.User;
-import com.gotenna.sdk.user.UserDataStore;
+import com.gotenna.sdk.data.user.User;
+import com.gotenna.sdk.data.user.UserDataStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,12 @@ class SetGidPresenter
             @Override
             public void onResponse(GTResponse response)
             {
-                if (response.getResponseCode() == GTDataTypes.GTCommandResponseCode.POSITIVE)
+                if (view == null)
+                {
+                    return;
+                }
+
+                if (response.getResponseCode() == GTResponse.GTCommandResponseCode.POSITIVE)
                 {
                     view.showSetGidSuccessMessage();
                 }
@@ -95,7 +99,10 @@ class SetGidPresenter
             @Override
             public void onError(GTError error)
             {
-                view.showSetGidFailureMessage();
+                if (view != null)
+                {
+                    view.showSetGidFailureMessage();
+                }
             }
         });
     }

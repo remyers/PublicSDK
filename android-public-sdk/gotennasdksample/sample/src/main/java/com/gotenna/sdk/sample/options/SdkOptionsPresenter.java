@@ -1,13 +1,13 @@
 package com.gotenna.sdk.sample.options;
 
-import com.gotenna.sdk.bluetooth.GTConnectionManager;
-import com.gotenna.sdk.commands.GTCommand;
-import com.gotenna.sdk.commands.GTCommandCenter;
-import com.gotenna.sdk.commands.GTError;
-import com.gotenna.sdk.interfaces.GTErrorListener;
-import com.gotenna.sdk.responses.GTResponse;
+import com.gotenna.sdk.connection.GTConnectionManager;
+import com.gotenna.sdk.data.GTCommand;
+import com.gotenna.sdk.data.GTCommandCenter;
+import com.gotenna.sdk.data.GTError;
+import com.gotenna.sdk.data.GTErrorListener;
+import com.gotenna.sdk.data.GTResponse;
+import com.gotenna.sdk.data.user.UserDataStore;
 import com.gotenna.sdk.responses.SystemInfoResponseData;
-import com.gotenna.sdk.user.UserDataStore;
 
 /**
  * A presenter for {@link SdkOptionsActivity}.
@@ -60,9 +60,7 @@ class SdkOptionsPresenter
 
     void onCreate(FirmwareUpdateHelper firmwareUpdateHelper)
     {
-        // Check for that latest goTenna Firmware file from the Internet
         this.firmwareUpdateHelper = firmwareUpdateHelper;
-        this.firmwareUpdateHelper.checkForNewFirmwareFile();
 
         // This person has not selected their user or set their GID yet
         // Force them to the SetGidActivity screen so they can select a user
@@ -148,29 +146,41 @@ class SdkOptionsPresenter
 
     void onDoUpdateFirmwareCheck()
     {
-        if (!firmwareUpdateHelper.hasLatestFirmwareVersion())
-        {
-            view.showLatestFirmwareNotDownloadedMessage();
-            return;
-        }
-
         // For a firmware update, first we ask the goTenna what its current firmware version is so we can check if an update is needed
         gtCommandCenter.sendGetSystemInfo(new GTCommandCenter.GTSystemInfoResponseListener()
         {
             @Override
-            public void onResponse(SystemInfoResponseData systemInfoResponseData)
+            public void onResponse(final SystemInfoResponseData systemInfoResponseData)
             {
-                if (view == null)
-                    return;
+                // Now we check to see if their is a newer version of the firmware available from the Amazon Bucket
+                firmwareUpdateHelper.checkForNewFirmwareFile(systemInfoResponseData.getFirmwareVersion(),
+                        new FirmwareUpdateHelper.FirmwareFileDownloadListener()
+                        {
+                            @Override
+                            public void onFirmwareFileDownloaded()
+                            {
+                                if (view == null)
+                                    return;
 
-                if (firmwareUpdateHelper.shouldDoFirmwareUpdate(systemInfoResponseData))
-                {
-                    firmwareUpdateHelper.showFirmwareUpdateDialog(systemInfoResponseData);
-                }
-                else
-                {
-                    view.showFirmwareVersionAlreadyUpToDateMessage();
-                }
+                                if (firmwareUpdateHelper.shouldDoFirmwareUpdate(systemInfoResponseData))
+                                {
+                                    firmwareUpdateHelper.showFirmwareUpdateDialog(systemInfoResponseData);
+                                }
+                                else
+                                {
+                                    view.showFirmwareVersionAlreadyUpToDateMessage();
+                                }
+                            }
+
+                            @Override
+                            public void onFirmwareFileDownloadFailed()
+                            {
+                                if (view == null)
+                                    return;
+
+                                view.showLatestFirmwareNotDownloadedMessage();
+                            }
+                        });
             }
         }, new GTErrorListener()
         {

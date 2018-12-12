@@ -15,10 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.gotenna.sdk.bluetooth.BluetoothAdapterManager;
+import com.gotenna.sdk.connection.BluetoothAdapterManager;
+import com.gotenna.sdk.sample.PermissionsUtils;
 import com.gotenna.sdk.sample.R;
 import com.gotenna.sdk.sample.options.SdkOptionsActivity;
-import com.gotenna.sdk.sample.PermissionsUtils;
 
 /**
  * Screen which allows the user to choose which type of goTenna they would like to connect to.
@@ -63,7 +63,7 @@ public class ScanActivity extends AppCompatActivity implements ScanPresenter.Sca
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        scanPreviousGotennaButton = (Button) findViewById(R.id.scanPreviousGotennaButton);
+        scanPreviousGotennaButton = findViewById(R.id.scanPreviousGotennaButton);
 
         handler = new Handler();
 
@@ -147,6 +147,16 @@ public class ScanActivity extends AppCompatActivity implements ScanPresenter.Sca
     }
 
     @Override
+    public void showUnsupportedDeviceWarning(String message)
+    {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+                .show();
+    }
+
+    @Override
     public void enableScanPreviousButton()
     {
         scanPreviousGotennaButton.setEnabled(true);
@@ -182,20 +192,20 @@ public class ScanActivity extends AppCompatActivity implements ScanPresenter.Sca
     {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.choose_gotenna_type)
-                .setNegativeButton(R.string.gotenna_v1_choice, new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        presenter.onScanForV1();
-                    }
-                })
                 .setPositiveButton(R.string.gotenna_mesh_choice, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
                         presenter.onScanForMesh();
+                    }
+                })
+                .setNeutralButton(R.string.gotenna_pro_choice, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        presenter.onScanForPro();
                     }
                 })
                 .show();
@@ -247,5 +257,62 @@ public class ScanActivity extends AppCompatActivity implements ScanPresenter.Sca
     {
         SdkOptionsActivity.start(this);
         finish();
+    }
+
+    @Override
+    public void showPlaceUnknownWarning()
+    {
+        Toast.makeText(this, R.string.cannot_find_place, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showErrorSettingFrequenciesWarning()
+    {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.error_setting_frequencies))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        presenter.onErrorConfirmed();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    @Override
+    public void showXCheckError()
+    {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.x_check_error)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        presenter.onErrorConfirmed();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    @Override
+    public void showNotXDeviceWarning(String serialNumber)
+    {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.not_x_device, serialNumber))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        presenter.onErrorConfirmed();
+                    }
+                })
+                .create()
+                .show();
     }
 }

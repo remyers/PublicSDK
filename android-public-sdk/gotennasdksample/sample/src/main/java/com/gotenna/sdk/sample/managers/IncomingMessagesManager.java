@@ -4,11 +4,11 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.gotenna.sdk.commands.GTCommandCenter;
-import com.gotenna.sdk.messages.GTBaseMessageData;
-import com.gotenna.sdk.messages.GTGroupCreationMessageData;
-import com.gotenna.sdk.messages.GTMessageData;
-import com.gotenna.sdk.messages.GTTextOnlyMessageData;
+import com.gotenna.sdk.data.GTCommandCenter;
+import com.gotenna.sdk.data.messages.GTBaseMessageData;
+import com.gotenna.sdk.data.messages.GTGroupCreationMessageData;
+import com.gotenna.sdk.data.messages.GTMessageData;
+import com.gotenna.sdk.data.messages.GTTextOnlyMessageData;
 import com.gotenna.sdk.sample.MyApplication;
 import com.gotenna.sdk.sample.R;
 import com.gotenna.sdk.sample.models.Message;
@@ -112,12 +112,14 @@ public class IncomingMessagesManager implements GTCommandCenter.GTMessageListene
     {
         // We do not send any custom formatted messages in this app,
         // but if you wanted to send out messages with your own format, this is where
-        // you would receive those messages.
+        // you would receive those incoming messages.
     }
 
     @Override
     public void onIncomingMessage(GTBaseMessageData gtBaseMessageData)
     {
+        // This is where you would receive incoming messages that the SDK automatically knows how to parse
+        // such as GTTextOnlyMessageData among the many other MessageData classes.
         if (gtBaseMessageData instanceof GTTextOnlyMessageData)
         {
             // Somebody sent us a message, try to parse it
