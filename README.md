@@ -1,11 +1,12 @@
 # PublicSDK
-Public Android and iOS SDK's for the goTenna
+Public Android, iOS and Python SDK's for the goTenna
 
 First read [goTennaSDKIntro.pdf](goTennaSDKIntro.pdf)
 
 ### Contents
 - [android-public-sdk](android-public-sdk) - SDK for Android
 - [iOS-Public-SDK](ios-public-sdk) - SDK for iOS
+- [python-public-sdk](python-public-sdk) - SDK for Python
 - [goTenna Android SDK JavaDocs](https://gotenna.github.io/PublicSDK/android-public-sdk/javadocs/)
 - [goTenna iOS SDK Docs](https://gotenna.github.io/PublicSDK/ios-public-sdk/GoTennaSDKDocs/html/)
 
