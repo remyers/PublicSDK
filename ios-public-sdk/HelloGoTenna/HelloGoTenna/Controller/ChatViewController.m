@@ -2,17 +2,19 @@
 //  ChatViewController.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/26/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/26/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "ChatViewController.h"
 #import "ContactManager.h"
 #import "MessagingManager.h"
 #import "QueueManager.h"
-
 #import "ChatTableDataSource.h"
-
+#import "Group.h"
+#import "Contact.h"
+#import "Message.h"
+#import "ChatCell.h"
 @import GoTennaSDK;
 
 @interface ChatViewController () <MessagingManagerProtocol, QueueManagerProtocol, ChatTableProtocol, UITextFieldDelegate>
@@ -74,16 +76,11 @@
                                                    senderGID:[[UserDataStore shared] currentUser].gId
                                                  receiverGID:self.receivingGID];
     
-    switch (conversationType) {
-        case ShoutGID:
-            [[MessagingManager sharedManager] sendBroadcastMessage:outgoingMessage];
-            break;
-        case OneToOneGID:
-        case GroupGID:
-            [[MessagingManager sharedManager] sendMessage:outgoingMessage encrypt:YES];
-            break;
-        case EmergencyGID:
-            break;
+    if (conversationType == ShoutGID) {
+        [[MessagingManager sharedManager] sendBroadcastMessage:outgoingMessage];
+    }
+    else if (conversationType == OneToOneGID || conversationType == GroupGID) {
+        [[MessagingManager sharedManager] sendMessage:outgoingMessage];
     }
 }
 
@@ -105,12 +102,6 @@
     [self insertMessage:message];
 }
 
-//- (void)messagingManager:(MessagingManager *)manager didReceiveIncoming:(GTBaseMessageData *)messageData {
-//    // Generic handler
-//    Message *message = [[Message alloc] initWithData:(GTTextOnlyMessageData *)messageData];
-//    [self insertMessage:message];
-//}
-
 # pragma mark - QueueManagerProtocol
 
 - (void)queueManager:(QueueManager *)manager didResendMessage:(Message *)message {
@@ -119,8 +110,8 @@
 
 # pragma mark - ChatTableProtocol
 
-- (void)chatTable:(ChatTableDataSource *)chatTable didSelectCell:(UITableViewCell *)cell {
-    if ([cell.textLabel.text isEqualToString:@"Send Message"]) {
+- (void)chatTable:(ChatTableDataSource *)chatTable didSelectCell:(ChatCell *)cell {
+    if ([cell.chatKeyLabel.text hasPrefix:@"Send Message"]) {
         [self sendMessage];
     }
 }
@@ -201,11 +192,10 @@
     // Assign handlers
     [[MessagingManager sharedManager] setDelegate:self];
     [[QueueManager sharedManager] setDelegate:self];
+    
+    self.tableView.estimatedRowHeight = 44;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

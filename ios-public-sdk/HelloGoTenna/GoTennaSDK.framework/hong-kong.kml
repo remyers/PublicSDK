@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<!-- created by GmapGIS.com -->
+<Document><name>MynameKML file polygon </name><description>Some descrition</description><Style id="polyStyID_0"><LineStyle><color>FF0000FF</color><width>5</width></LineStyle><PolyStyle><color>660088ff</color></PolyStyle> </Style><Placemark><name>distribution/range</name><description></description><styleUrl>#polyStyID_0</styleUrl><Polygon><tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode><outerBoundaryIs><LinearRing><coordinates>
+114.25644,22.1518,0.0
+114.01248,22.1848,0.0
+113.92222,22.15059,0.0
+113.85093,22.15876,0.0
+113.81042,22.25533,0.0
+113.88084,22.3126,0.0
+113.86921,22.41703,0.0
+114.02794,22.50767,0.0
+114.08599,22.5231,0.0
+114.15032,22.54908,0.0
+114.15994,22.56402,0.0
+114.2173,22.55632,0.0
+114.33678,22.56076,0.0
+114.43668,22.55568,0.0
+114.44973,22.53824,0.0
+114.34296,22.18995,0.0
+</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark></Document></kml>

@@ -8,25 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSInteger const BYTE_LEN;
+extern NSInteger const SHORT_BYTE_LEN;
+
 @interface EndianUtils : NSObject
 
 + (NSData *)longToBigEndianBytes:(unsigned long long)longValue;
 + (NSData *)longToBigEndianBytes:(unsigned long long)longValue length:(int)length;
 
 + (NSData *)integerToBigEndianBytes:(int)integer;
-
 + (NSData *)integer:(int)integer toBigEndianBytesWithLength:(int)byteCount;
+
++ (NSData *)doubleToBigEndianBytes:(double )doubleValue;
++ (NSData *)boolToBigEndian:(BOOL)boolean;
 
 + (long long)bytesToLong:(NSData *)data;
 
 + (int)bytesToInt:(NSData *)data;
 
++ (short)bytesToShort:(NSData *)data;
+
 + (double) bytesToDouble:(NSData *)data;
 
-+ (NSData *)doubleToBigEndianBytes:(double )doubleValue;
++ (BOOL)bytesToBool:(NSData *)data;
 
-+ (NSData*)boolToBigEndian:(BOOL)boolean;
-
-+ (BOOL)bytesToBool:(NSData*)data;
++ (NSNumber *)byteToSignedNumber:(NSData *)data;
 
 @end

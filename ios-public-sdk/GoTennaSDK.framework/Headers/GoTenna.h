@@ -1,10 +1,12 @@
 //
-//  GoTennaSDK.h
-//  goTenna SDK
+//  GoTenna.h
+//  GoTenna
+//
+//  Created by Julietta Yaunches on 3/2/15.
+//  Copyright (c) 2015 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "NSNumber+Utilities.h"
 #import "GTDataTypes.h"
 #import "GTBaseMessageData.h"
 #import "GTMessageDataProtocol.h"
@@ -14,8 +16,10 @@
 #import "GTGroupCreationMessageData.h"
 #import "GTLocationMessageData.h"
 #import "GTResponse.h"
+#import "NSNumber+Utilities.h"
 #import "GTMessageData.h"
 
+/// GoTenna token-based operations
 @interface GoTenna : NSObject
 
 /**

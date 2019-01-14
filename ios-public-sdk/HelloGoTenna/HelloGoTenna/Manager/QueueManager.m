@@ -2,41 +2,17 @@
 //  QueueManager.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/3/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/3/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "QueueManager.h"
-#import <GoTennaSDK/GoTennaSDK.h>
 #import "MessagingManager.h"
+#import "QueueItem.h"
+#import "Message.h"
+@import GoTennaSDK;
 
 const float MESSAGE_RESEND_DELAY = 5.f;
-
-# pragma mark - Item
-
-@interface QueueItem : NSObject
-
-@property (nonatomic, strong) Message *message;
-@property (nonatomic, assign) BOOL isBroadcast;
-
-@end
-
-@implementation QueueItem
-
-- (instancetype)initWithMessage:(Message *)message {
-    self = [super init];
-    
-    if (self) {
-        _message = message;
-        _isBroadcast = ([message.receiverGID isEqualToNumber:[GIDManager shoutGID]]);
-    }
-    
-    return self;
-}
-
-@end
-
-# pragma mark - Manager
 
 @interface QueueManager ()
 
@@ -48,7 +24,7 @@ const float MESSAGE_RESEND_DELAY = 5.f;
 
 @implementation QueueManager
 
-# pragma mark - Init
+//MARK:- init
 
 + (instancetype)sharedManager {
     static QueueManager *manager = nil;
@@ -65,13 +41,13 @@ const float MESSAGE_RESEND_DELAY = 5.f;
     self = [super init];
     
     if (self) {
-        _queue = [NSMutableArray array];
+        self.queue = [NSMutableArray array];
     }
     
     return self;
 }
 
-# pragma mark - Functions
+//MARK:- functions
 
 - (void)addMessageToQueue:(Message *)message {
     QueueItem *item = [[QueueItem alloc] initWithMessage:message];
@@ -122,7 +98,7 @@ const float MESSAGE_RESEND_DELAY = 5.f;
     [self attemptToSendMessage];
 }
 
-# pragma mark - Send Message
+//MARK:- send message
 
 - (void)sendMessageFromQueue:(QueueItem *)item {
     Message *message = item.message;
@@ -156,7 +132,7 @@ const float MESSAGE_RESEND_DELAY = 5.f;
     };
     
     if ([item isBroadcast]) {
-        [[GTCommandCenter shared] sendBroadcast:[message toBytes] onResponse:onResponse onError:onError];
+        [[GTCommandCenter shared] sendBroadcast:[message toBytes] toGID:[GIDManager shoutGID] onResponse:onResponse onError:onError];
     } else {
         [[GTCommandCenter shared] sendMessage:[message toBytes] toGID:message.receiverGID fromGID:message.senderGID onResponse:onResponse onError:onError];
     }

@@ -7,7 +7,6 @@
 
 @class TLVSection;
 @protocol GTMessageDataProtocol <NSObject>
-//- (NSString *)serializeToString;
 - (id)initFromOrderedData:(NSArray<TLVSection*> *)data withSenderGID:(NSNumber*)senderGID;
 - (NSArray<TLVSection*> *)getTLVSections;
 - (NSData*)serializeToBytes;

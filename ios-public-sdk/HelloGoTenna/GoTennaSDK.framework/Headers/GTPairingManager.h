@@ -1,6 +1,6 @@
 //
 //  GTPairingManager.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Julietta Yaunches on 11/25/14.
 //  Copyright (c) 2014 goTenna. All rights reserved.
@@ -9,11 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "GTPairingConnectionState.h"
+#import "NRFScanResponseProtocol.h"
 
+/// Protocol for handling state changes
 @protocol GTPairingHandlerProtocol <NSObject>
+
 - (void)updateState:(GTConnectionState)state;
+
 @end
 
+/// Protocol for bluetooth pairing
 @protocol BluetoothPairingProtocol <NSObject>
 - (void)didConnectToPeripheral;
 - (void)bluetoothConnectionNotAvailable:(CBManagerState)state;
@@ -22,33 +27,61 @@
 - (void)nonUserDisconnectionOccurred;
 @end
 
-@interface GTPairingManager : NSObject <BluetoothPairingProtocol>
+/// Manager for handling pairing, with finer access to commands and queries.
+@interface GTPairingManager : NSObject <BluetoothPairingProtocol, NRFScanResponseProtocol>
 
-@property(nonatomic) id<GTPairingHandlerProtocol> pairingHandler;
-@property(nonatomic) BOOL shouldReconnect;
+/// Pairing handler that adopts protocol
+@property (nonatomic) id<GTPairingHandlerProtocol> pairingHandler;
 
-// Shared singleton instance
-// This class is a singleton. Use this method to get the global instance.
-+ (GTPairingManager *)shared;
+/// Determines whether a reconnection should occur once disconnected
+@property (nonatomic) BOOL shouldReconnect;
 
-// ConnectState
-// Use this method to get the current connection status of your goTenna
+/**
+ ###Shared instance
+ 
+ Use this for to create access the common instance of this class.
+ 
+ @return Singleton instance
+ */
++ (instancetype)shared;
+
+/**
+ ###Connect State
+ 
+ Use this method to get the current connection status of your goTenna
+ */
 - (GTConnectionState)connectingState;
 
-// Explicitly update the connection state
-// Used mainly to set state as Disconnected
+/**
+ ###Update state
+ 
+ Explicitly update the connection state. Used mainly to set state as `Disconnected`.
+ 
+ @param GTConnectionState state
+ */
 - (void)updateState:(GTConnectionState)state;
 
-// Disconnect
-// Call this to disconnect a connected goTenna
+/**
+ ###Disconnect
+ 
+ Disconnects a connected device.
+ */
 - (void)initiateDisconnect;
 
-// Connect
-// Call this to connect to your goTenna
-// NOTE: before calling this, ensure to set the pairingHandler delegate to get callbacks on when the state changes to
-// connected or any other possible states
+/**
+ #Initiate goTenna scan
+ 
+ Call this to connect to your goTenna.
+ NOTE: before calling this, ensure to set the `pairingHandler` delegate to get callbacks on when the state changes to
+ connected or any other states.
+ */
 - (void)initiateScanningConnect;
 
+/**
+ #Stop scan
+ 
+ Stops scanning for devices.
+ */
 - (void)stopScanningConnect;
 
 @end

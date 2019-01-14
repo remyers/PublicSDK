@@ -2,8 +2,8 @@
 //  Group.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/1/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/1/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "Group.h"
@@ -13,39 +13,40 @@
 @interface Group ()
 
 @property (nonatomic, strong) NSNumber *groupGID;
-@property (nonatomic, strong) NSArray<Contact *> *groupMembers;
+@property (nonatomic, strong) NSMutableArray<Contact *> *members;
 
 @end
 
 @implementation Group
 
-# pragma mark - Init
+//MARK:- Init
 
 - (instancetype)initWithGID:(NSNumber *)gid groupMembers:(NSArray<Contact *> *)groupMembers {
     self = [super init];
     
     if (self) {
-        _groupGID = gid;
-        _groupMembers = groupMembers;
+        self.groupGID = gid;
+        self.members = [NSMutableArray arrayWithArray:groupMembers];
     }
     
     return self;
 }
 
-# pragma mark - Queries
+//MARK:- queries
 
 - (NSArray<Contact *> *)groupMembers {
-    NSMutableArray<Contact *> *mutableGroupMembers = [_groupMembers mutableCopy];
+    
+    NSMutableArray<Contact*> *tempMembers = [self.members mutableCopy];
     
     // Display all contacts in group except self
-    for (Contact *contact in mutableGroupMembers) {
+    for (Contact *contact in self.members) {
         if ([[UserDataStore shared] isMyGID:contact.gid]) {
-            [mutableGroupMembers removeObject:contact];
+            [tempMembers removeObject:contact];
             break;
         }
     }
     
-    return mutableGroupMembers;
+    return [tempMembers copy];
 }
 
 @end

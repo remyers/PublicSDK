@@ -6,9 +6,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDate (GTLogging)
-
 + (NSString *)nowForLogs;
 + (NSDate *)dateFromString:(NSString *)dateString;
 + (NSString *)dateForPrinting:(NSDate *)date;
-
 @end

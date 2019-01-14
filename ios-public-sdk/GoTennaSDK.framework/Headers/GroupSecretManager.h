@@ -1,6 +1,6 @@
 //
 //  GroupSecretManager.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Thomas Colligan on 1/12/16.
 //  Copyright © 2016 goTenna. All rights reserved.
@@ -10,11 +10,12 @@
 
 @interface GroupSecretManager : NSObject
 
-+ (instancetype)shared;
-+ (NSData *)generateSharedSecret;
++ (GroupSecretManager *) shared;
++ (NSData *) generateSharedSecret;
 
+- (NSData *) createAndSaveSecretForGroup:(NSNumber *)groupGID;
 - (void)saveSecret:(NSData *)sharedSecret forGroup:(NSNumber *)groupGID;
-- (NSData *)createAndSaveSecretForGroup:(NSNumber *)groupGID;
 - (NSData *)getSharedSecretForGroup:(NSNumber *)groupGID;
+- (void)clearGroupSecrets;
 
 @end

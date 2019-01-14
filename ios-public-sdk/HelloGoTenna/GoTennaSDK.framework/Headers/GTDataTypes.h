@@ -1,6 +1,6 @@
 //
 // Created by Julietta Yaunches on 11/18/14.
-// goTenna SDK
+// Copyright (c) 2014 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,6 +14,10 @@ typedef enum {
     TipMessage,
     EmergencyLocationFirmwareTemporary,
     LocationTetheringTip,
+    GeneralFeedMessage,
+    DateFeedMessage,
+    FrequencySlotMessage,
+    AudioMessage
 } GTMessageType;
 
 typedef enum {
@@ -22,9 +26,9 @@ typedef enum {
     MessageNotReceived,
     MessageReceivedMesh,
     MessageReceivedMeshLoading,
+    MessageReceivedLoading,
     MessageNotReceivedTemperatureRange,
-    MessageNotReceivedRSSICrossed,
-    MessageNotReceivedTimeout,
+    MessageNotReceivedRSSICrossed
 } GTOutgoingMessageStatus;
 
 typedef enum {

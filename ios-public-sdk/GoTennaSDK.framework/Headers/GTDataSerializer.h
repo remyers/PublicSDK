@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GTMessageDataProtocol.h"
 
 @class GTResponse;
 @class SystemInfoResponseData;
@@ -17,49 +18,64 @@
 @class PacketVerifier;
 @class TLVSection;
 
-@protocol GTMessageDataProtocol;
-
+/// Serializer of message data
 @interface GTDataSerializer : NSObject
 
 /**
- Used for unpacking data for a group communication scenario, extraction includes encryption shared secret and group GID.
- NOTE: handled internally by the `GTDataSerializer`
+ ###Deserialize group message data
  
- @param data message data object, if related to group activities will be unpacked
+ Convert message object data to `GTGroupCreationMessageData`
  
- @return returns non-nil object if data coming in was relevant
+ @param data   Message data object
+ @return GTGroupCreationMessageData
  */
 + (GTGroupCreationMessageData *)deserializeGroupMessageDataObj:(GTMessageData *)data;
 
 /**
- Called to unpack a response from the goTenna, holding system information
+ ###Deserialize system info
  
- @param response goTenna information filled response object
- 
- @return system info object that holds information about the goTenna
+ Convert `GTResponse` from a system info request to `SystemInfoResponseData`
+
+ @param response   Response object from system info request
+ @return SystemInfoResponseData
  */
 + (SystemInfoResponseData *)deserializeSystemInfo:(GTResponse *)response;
 
 /**
- Called when building a response object to be used for retrieve information after a command message is received
+ ###Message deserialization
  
- @param data    message data serialized
- @param command command object relating to the message data
+ Deserialize message for the given command
  
- @return response object holding information for the
+ @param data    Message data that goes with the command
+ @param command Command that goes with the message data.
+
+ @return GTResponse
  */
 + (GTResponse *)deserializeMessage:(NSData *)data forCommand:(GTCommand *)command;
 
 /**
- Parses all relevant content for an incoming message
+ ###Parse incoming data
  
- @param response               response object used for the incoming message
- @param onIncomingMessage      registered `onIncoming` response block for the message
- @param onGroupAdded           registered `onGroupAdded` response block for the message
- @param lastMessageDelete      `lastMessageDelete` block used within the `GTCommandBuilder`
- @param isDecryptionErrorRetry whether this is to be retried for a decryption error
+ Parse incoming message data using the message data.
  
- @return returns back whether success was possible with this parsing
+ @param commandData   Command data that is the incoming message data to parse
+ @param messageData   Message data to be converted
+
+ @return GTBaseMessageData
+ */
++ (GTBaseMessageData *)parseIncomingMessageData:(NSData *)commandData withMessageData:(GTMessageData *)messageData;
+
+/**
+ ###Parse And Handle
+ 
+ Parse and handle the response from the command that pulls messages (Get Message) from the goTenna device. Generally for internal use.
+ @param response   Response object after the message is pulled
+ @param onIncomingMessage   Called when the message is incoming
+ @param onGroupAdded   Called at appropriate time for executing group operations, used to add group GID
+ @param lastMessageDelete   Called to provide opportunity to delete message at the appropriate time
+ @param isDecryptionErrorRetry used to perform actions accordingly if operations are for decryption error retry
+ 
+ @return BOOL
  */
 + (BOOL)parseAndHandleGetMessageResponse:(GTResponse *)response
                               onIncoming:(void (^)(GTMessageData *))onIncomingMessage
@@ -68,13 +84,12 @@
                   isDecryptionErrorRetry:(BOOL)isDecryptionErrorRetry;
 
 /**
- Parses all relevant content for an incoming message into `GTBaseMessageData`
+ ###Get Token Data
  
- @param dataArray    message data serialized
- @param messageData  command object relating to the message data
- 
- @return response object holding information for the
+ Get app token data
+
+ @return NSData token data
  */
-+ (GTBaseMessageData *)parseIncomingMessageData:(NSArray<TLVSection *> *)dataArray withMessageData:(GTMessageData *)messageData;
++ (NSData *)appTokenData;
 
 @end

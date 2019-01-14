@@ -13,6 +13,7 @@
 
 - (instancetype)initWithFirmwareAmazonBucket:(const NSString *)bucket;
 
+- (void)checkAvailableFirmwareFile:(FileCheckCompletion)fileCheckCompletion;
 - (void)retrieveFirmwareWithStorageCompletion:(RetrievalCompletion)retrievalCompletion;
 
 @end

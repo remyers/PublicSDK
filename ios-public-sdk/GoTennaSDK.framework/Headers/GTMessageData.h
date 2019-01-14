@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSNumber *senderGID;
 @property (nonatomic, strong) NSDate *messageSentDate;
 @property (nonatomic, assign) NSUInteger hopCount;
+@property (nonatomic, strong) NSNumber *rssiValue;
 
 - (instancetype)initWithData:(NSData *)data addressedGID:(NSNumber *)addressedGID response:(GTResponse *)response;
 - (BOOL)isValid;

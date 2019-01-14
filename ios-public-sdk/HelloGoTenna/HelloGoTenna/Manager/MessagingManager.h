@@ -2,14 +2,13 @@
 //  MessagingManager.h
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/26/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/26/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <GoTennaSDK/GTGroupCreationMessageData.h>
-#import "Message.h"
-#import "Group.h"
+@class Message;
+@class GTBaseMessageData;
 
 typedef void (^MessagingManagerResponse)(Message *message, NSError *error);
 
@@ -35,6 +34,6 @@ typedef void (^MessagingManagerResponse)(Message *message, NSError *error);
 + (instancetype)sharedManager;
 
 - (void)sendBroadcastMessage:(Message *)message;
-- (void)sendMessage:(Message *)message encrypt:(BOOL)encrypt;
+- (void)sendMessage:(Message *)message;
 
 @end

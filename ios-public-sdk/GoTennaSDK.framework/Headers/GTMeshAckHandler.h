@@ -1,6 +1,6 @@
 //
 //  GTMeshAckHandler.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Ryan Cohen on 3/17/17.
 //  Copyright © 2017 goTenna. All rights reserved.

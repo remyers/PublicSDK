@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLLocation.h>
 
-typedef enum : NSUInteger {
-    NONE,
+typedef NS_ENUM(NSUInteger, RegionID) {
+    NONE = 0,
     NORTH_AMERICA,
     EUROPE,
     SOUTH_AFRICA,
@@ -19,18 +19,21 @@ typedef enum : NSUInteger {
     SINGAPORE,
     TAIWAN,
     JAPAN,
-    HONGKONG,
+    HONG_KONG,
     SOUTH_KOREA,
+    GUAM,
     
     /* ITU Regions */
     ITU_1,
     ITU_2,
     ITU_3,
     ITU_3_EXT
-} RegionID;
+};
 
+/// Region boundary operations class
 @interface RegionBound : NSObject
 
+/// The region's identifier
 @property (nonatomic, readonly) RegionID regionID;
 
 /**

@@ -2,12 +2,11 @@
 //  FirmwareManager.h
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/1/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/1/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <GoTennaSDK/GTFirmwareInstallationProgressProtocol.h>
 
 @class FirmwareManager;
 
@@ -31,7 +30,7 @@ typedef NS_ENUM(NSUInteger, FirmwareUpdateState) {
 
 - (instancetype)initWithDelegate:(id<FirmwareManagerProtocol>)delegate;
 
-- (void)beginFirmwareUpdate;
+- (void)beginFirmwareUpdate:(void (^)(NSError *))errorBlock;
 
 - (BOOL)isUpdatingFirmware;
 

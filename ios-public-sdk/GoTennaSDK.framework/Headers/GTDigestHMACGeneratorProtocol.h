@@ -3,7 +3,7 @@
 //  EncryptionRewriting
 //
 //  Created by JOSHUA M MAKINDA on 12/23/15.
-//  Copyright © 2015 JOSHUA M MAKINDA. All rights reserved.
+//  Copyright © 2015 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

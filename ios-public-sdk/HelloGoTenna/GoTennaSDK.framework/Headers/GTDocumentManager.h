@@ -7,9 +7,8 @@
 
 
 @interface GTDocumentManager : NSObject
-
 - (NSURL *)firmwareFilePathfor:(NSString *)filename;
 - (NSString *)firmwareDirectory;
-- (double)extractFirmwareVersion:(NSString *)filename;
-
+- (NSString *)extractFirmwareVersion:(NSString *)filename;
+- (NSString *)versionNumberOnly:(NSString *)filename;
 @end

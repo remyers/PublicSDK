@@ -5,14 +5,21 @@
 
 #import <Foundation/Foundation.h>
 #import "GTFileLogger.h"
-#import "GTLogExportProtocol.h"
 
 @class GTDocumentManager;
+@class GTBaseMessageData;
 
-@interface GTCommunicationLogger : GTFileLogger <GTLogExportProtocol>
+@interface GTCommunicationLogger : GTFileLogger
++ (GTCommunicationLogger *)shared;
 
-+ (instancetype)shared;
++ (NSDictionary *)messageContentTypes;
++ (NSDictionary *)messageTypes;
 
 - (void)log:(NSString *)logText;
+
+- (id)buildGoTennaCommunicationEvent:(GTBaseMessageData *)data;
+
+- (NSString *)filename;
+- (NSString *)directory;
 
 @end

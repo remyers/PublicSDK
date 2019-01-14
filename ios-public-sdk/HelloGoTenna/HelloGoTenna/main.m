@@ -2,8 +2,8 @@
 //  main.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/20/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/20/18.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

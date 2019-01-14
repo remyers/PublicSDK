@@ -2,15 +2,15 @@
 //  ContactManager.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/25/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/25/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "ContactManager.h"
-#import <GoTennaSDK/UserDataStore.h>
-#import <GoTennaSDK/User.h>
-
-NSString * const kGroupCreatedNotification = @"kGroupCreatedNotification";
+#import "DemoConstants.h"
+#import "Group.h"
+#import "Contact.h"
+@import GoTennaSDK;
 
 @interface ContactManager ()
 
@@ -38,8 +38,8 @@ NSString * const kGroupCreatedNotification = @"kGroupCreatedNotification";
     self = [super init];
     
     if (self) {
-        _contacts = [NSMutableArray arrayWithCapacity:4];
-        _groups = [NSMutableArray array];
+        self.contacts = [NSMutableArray arrayWithCapacity:4];
+        self.groups = [NSMutableArray array];
         
         [self.contacts addObject:[[Contact alloc] initWithName:@"Alice" gid:@8123456789]];
         [self.contacts addObject:[[Contact alloc] initWithName:@"Bob"   gid:@89876543211]];
@@ -90,12 +90,28 @@ NSString * const kGroupCreatedNotification = @"kGroupCreatedNotification";
 
 - (void)createdGroup:(NSNotification *)notification {
     if ([notification.name isEqualToString:kGroupCreatedNotification]) {
-        Group *group = notification.userInfo[@"group"];
+        Group *group = notification.userInfo[kGroupCreatedKey];
         
-        if (![self.groups containsObject:group]) {
-            [self.groups addObject:group];
+        [self addToGroups:group];
+    }
+}
+
+- (void) addToGroups:(Group *)group {
+    
+    if (![self groupContains:group]) {
+        [self.groups addObject:group];
+    }
+}
+
+- (BOOL)groupContains:(Group *)myGroup {
+    
+    for (Group *group in self.groups) {
+        if ([myGroup.groupGID isEqualToNumber:group.groupGID]) {
+            return YES;
         }
     }
+    
+    return NO;
 }
 
 @end

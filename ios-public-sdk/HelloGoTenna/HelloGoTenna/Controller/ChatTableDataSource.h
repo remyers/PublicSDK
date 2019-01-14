@@ -2,13 +2,12 @@
 //  ChatTableDataSource.h
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/1/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/1/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <GoTennaSDK/GTDataTypes.h>
-
+@import GoTennaSDK;
 @class ChatTableDataSource;
 @class Contact;
 
@@ -31,3 +30,4 @@
 - (void)addMessage:(Message *)message;
 
 @end
+

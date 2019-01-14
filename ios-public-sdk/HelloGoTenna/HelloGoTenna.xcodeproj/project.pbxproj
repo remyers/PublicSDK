@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C3BC04121BA08DF001CD436 /* GoTennaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3BC04021BA08DE001CD436 /* GoTennaSDK.framework */; };
+		6C3BC04221BA08DF001CD436 /* GoTennaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3BC04021BA08DE001CD436 /* GoTennaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6CA064FC2165825500DF39D8 /* QueueItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA064FB2165825500DF39D8 /* QueueItem.m */; };
+		6CA064FF216591C700DF39D8 /* DemoConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA064FE216591C700DF39D8 /* DemoConstants.m */; };
+		6CA065082166C92900DF39D8 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA065072166C92900DF39D8 /* LocationManager.m */; };
 		9434FE821F30DE2B0054B2EE /* ChatTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9434FE811F30DE2B0054B2EE /* ChatTableDataSource.m */; };
 		9434FE8D1F312BF30054B2EE /* FirmwareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9434FE8C1F312BF30054B2EE /* FirmwareManager.m */; };
 		943FA6831F33D01B000ECFF3 /* QueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 943FA6821F33D01B000ECFF3 /* QueueManager.m */; };
@@ -23,18 +28,17 @@
 		946202201F20F61700A63484 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9462021F1F20F61700A63484 /* Assets.xcassets */; };
 		946202231F20F61700A63484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946202211F20F61700A63484 /* LaunchScreen.storyboard */; };
 		94A5B2E31F315BF500BFF9D7 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A5B2E21F315BF500BFF9D7 /* Group.m */; };
-		94ADAEBC1F2A424E00058722 /* GoTennaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADAEBA1F2A424B00058722 /* GoTennaSDK.framework */; };
-		94ADAEBD1F2A424E00058722 /* GoTennaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADAEBA1F2A424B00058722 /* GoTennaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8014A88218B456900A6D1EC /* ChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8014A87218B456900A6D1EC /* ChatCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		94ADAEBE1F2A424E00058722 /* Embed Frameworks */ = {
+		6C3BC02121B9F703001CD436 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				94ADAEBD1F2A424E00058722 /* GoTennaSDK.framework in Embed Frameworks */,
+				6C3BC04221BA08DF001CD436 /* GoTennaSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,6 +46,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C3BC04021BA08DE001CD436 /* GoTennaSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoTennaSDK.framework; sourceTree = "<group>"; };
+		6CA064FA2165825500DF39D8 /* QueueItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueueItem.h; sourceTree = "<group>"; };
+		6CA064FB2165825500DF39D8 /* QueueItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QueueItem.m; sourceTree = "<group>"; };
+		6CA064FD216591C700DF39D8 /* DemoConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoConstants.h; sourceTree = "<group>"; };
+		6CA064FE216591C700DF39D8 /* DemoConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoConstants.m; sourceTree = "<group>"; };
+		6CA065062166C92900DF39D8 /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		6CA065072166C92900DF39D8 /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		9434FE801F30DE2B0054B2EE /* ChatTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTableDataSource.h; path = Controller/ChatTableDataSource.h; sourceTree = "<group>"; };
 		9434FE811F30DE2B0054B2EE /* ChatTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatTableDataSource.m; path = Controller/ChatTableDataSource.m; sourceTree = "<group>"; };
 		9434FE8B1F312BF30054B2EE /* FirmwareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirmwareManager.h; path = Manager/FirmwareManager.h; sourceTree = "<group>"; };
@@ -72,7 +83,8 @@
 		946202241F20F61700A63484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94A5B2E11F315BF500BFF9D7 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = Model/Group.h; sourceTree = "<group>"; };
 		94A5B2E21F315BF500BFF9D7 /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Group.m; path = Model/Group.m; sourceTree = "<group>"; };
-		94ADAEBA1F2A424B00058722 /* GoTennaSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoTennaSDK.framework; sourceTree = "<group>"; };
+		F8014A86218B456900A6D1EC /* ChatCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatCell.h; sourceTree = "<group>"; };
+		F8014A87218B456900A6D1EC /* ChatCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,13 +92,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94ADAEBC1F2A424E00058722 /* GoTennaSDK.framework in Frameworks */,
+				6C3BC04121BA08DF001CD436 /* GoTennaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6CA064F8216580BE00DF39D8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6CA064FA2165825500DF39D8 /* QueueItem.h */,
+				6CA064FB2165825500DF39D8 /* QueueItem.m */,
+				6CA064FD216591C700DF39D8 /* DemoConstants.h */,
+				6CA064FE216591C700DF39D8 /* DemoConstants.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		9450479C1F27D85600E627B3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +121,8 @@
 				945047B21F291DED00E627B3 /* ChatViewController.m */,
 				945047B41F29283300E627B3 /* GroupCreateViewController.h */,
 				945047B51F29283300E627B3 /* GroupCreateViewController.m */,
+				F8014A86218B456900A6D1EC /* ChatCell.h */,
+				F8014A87218B456900A6D1EC /* ChatCell.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -126,6 +151,8 @@
 				9434FE8C1F312BF30054B2EE /* FirmwareManager.m */,
 				943FA6811F33D01B000ECFF3 /* QueueManager.h */,
 				943FA6821F33D01B000ECFF3 /* QueueManager.m */,
+				6CA065062166C92900DF39D8 /* LocationManager.h */,
+				6CA065072166C92900DF39D8 /* LocationManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -133,6 +160,7 @@
 		946202071F20F61700A63484 = {
 			isa = PBXGroup;
 			children = (
+				6C3BC04021BA08DE001CD436 /* GoTennaSDK.framework */,
 				946202121F20F61700A63484 /* HelloGoTenna */,
 				946202111F20F61700A63484 /* Products */,
 				9462022E1F20F81400A63484 /* Frameworks */,
@@ -150,6 +178,7 @@
 		946202121F20F61700A63484 /* HelloGoTenna */ = {
 			isa = PBXGroup;
 			children = (
+				6CA064F8216580BE00DF39D8 /* Utilities */,
 				946202161F20F61700A63484 /* AppDelegate.h */,
 				946202171F20F61700A63484 /* AppDelegate.m */,
 				945047AA1F27DF4100E627B3 /* Manager */,
@@ -175,7 +204,6 @@
 		9462022E1F20F81400A63484 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				94ADAEBA1F2A424B00058722 /* GoTennaSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,7 +218,7 @@
 				9462020C1F20F61700A63484 /* Sources */,
 				9462020D1F20F61700A63484 /* Frameworks */,
 				9462020E1F20F61700A63484 /* Resources */,
-				94ADAEBE1F2A424E00058722 /* Embed Frameworks */,
+				6C3BC02121B9F703001CD436 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -207,7 +235,7 @@
 		946202081F20F61700A63484 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = goTenna;
 				TargetAttributes = {
 					9462020F1F20F61700A63484 = {
@@ -257,14 +285,18 @@
 				946202181F20F61700A63484 /* AppDelegate.m in Sources */,
 				945047B61F29283300E627B3 /* GroupCreateViewController.m in Sources */,
 				94A5B2E31F315BF500BFF9D7 /* Group.m in Sources */,
+				F8014A88218B456900A6D1EC /* ChatCell.m in Sources */,
 				9434FE8D1F312BF30054B2EE /* FirmwareManager.m in Sources */,
 				945047A61F27D92F00E627B3 /* Message.m in Sources */,
 				945047A31F27D8A400E627B3 /* ViewController.m in Sources */,
 				945047AD1F28DB3B00E627B3 /* MessagingManager.m in Sources */,
 				945047A91F27DF3E00E627B3 /* ContactManager.m in Sources */,
 				9434FE821F30DE2B0054B2EE /* ChatTableDataSource.m in Sources */,
+				6CA065082166C92900DF39D8 /* LocationManager.m in Sources */,
 				945047B31F291DED00E627B3 /* ChatViewController.m in Sources */,
 				946202151F20F61700A63484 /* main.m in Sources */,
+				6CA064FC2165825500DF39D8 /* QueueItem.m in Sources */,
+				6CA064FF216591C700DF39D8 /* DemoConstants.m in Sources */,
 				943FA6831F33D01B000ECFF3 /* QueueManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,15 +333,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -349,15 +389,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

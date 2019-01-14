@@ -2,21 +2,22 @@
 //  GroupCreateViewController.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/26/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/26/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "GroupCreateViewController.h"
 #import <GoTennaSDK/GoTennaSDK.h>
 #import "ChatViewController.h"
 #import "ContactManager.h"
+#import "Group.h"
+#import "Contact.h"
 
-const int MIN_GROUP_MEMBERS = 1;
+static NSString * const cellID = @"cellId";
 
 @interface GroupCreateViewController ()
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-
 @property (nonatomic, strong) NSMutableArray<Contact *> *recipients;
 @property (nonatomic, assign) NSUInteger memberResponseCount;
 @property (nonatomic, strong) NSNumber *groupGID;
@@ -35,6 +36,7 @@ const int MIN_GROUP_MEMBERS = 1;
         [self receivedMemberResponseForGID:memberGID found:[response responsePositive]];
         
     } fromGID:[[UserDataStore shared] currentUser].gId onError:^(NSError *error, NSNumber *memberGID) {
+        NSLog(@"Group Creation Error -> %@",error);
         [self receivedMemberResponseForGID:memberGID found:NO];
     }];
 }
@@ -44,11 +46,13 @@ const int MIN_GROUP_MEMBERS = 1;
     
     [self updateInvitationState:(found ? GroupInvitationStateReceived : GroupInvitationStateNotReceived) contactGID:gid];
     
-    if (self.memberResponseCount == [self.recipients count]) {
+    if (self.memberResponseCount >= 0)
+    {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
         cell.userInteractionEnabled = YES;
         
         self.group = [[Group alloc] initWithGID:self.groupGID groupMembers:self.recipients];
+        [[ContactManager sharedManager] addToGroups:self.group];
         [self reloadSendGroupMessageCell];
     }
     
@@ -70,7 +74,7 @@ const int MIN_GROUP_MEMBERS = 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     return [self configureCell:cell forIndexPath:indexPath];
 }
 
@@ -144,9 +148,12 @@ const int MIN_GROUP_MEMBERS = 1;
 - (NSArray<NSNumber *> *)memberGIDArray {
     NSMutableArray *memberGIDs = [NSMutableArray arrayWithCapacity:self.recipients.count];
     
-    for (Contact *contact in self.recipients) {
-        [memberGIDs addObject:contact.gid];
+    for (int i = 0; i < 13; i++) {
+        [memberGIDs addObject:self.recipients.lastObject.gid];
     }
+//    for (Contact *contact in self.recipients) {
+//        [memberGIDs addObject:contact.gid];
+//    }
     
     return memberGIDs;
 }
@@ -168,11 +175,6 @@ const int MIN_GROUP_MEMBERS = 1;
     
     self.recipients = [[[ContactManager sharedManager] allDemoContactsExcludingSelf] mutableCopy];
     self.group = nil;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

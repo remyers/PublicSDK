@@ -1,6 +1,6 @@
 //
 //  NSString+GTFormatting.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Julietta Yaunches on 16/07/2014.
 //  Copyright (c) 2014 goTenna. All rights reserved.
@@ -15,10 +15,12 @@
 + (NSString *)pingStringWithDate:(NSDate *)date;
 
 + (NSString *)presentGID:(NSNumber *)gid;
++ (NSString *)presentGeneratedGID:(NSNumber *)gid;
 + (NSString *)phoneNumberCleaned:(NSString *)gidToClean;
 
 - (NSString *)safeSubstringFromIndex:(NSUInteger)fromIndex;
 
 - (BOOL)isAllDigits;
+- (BOOL)isValidGIDNumber;
 
 @end

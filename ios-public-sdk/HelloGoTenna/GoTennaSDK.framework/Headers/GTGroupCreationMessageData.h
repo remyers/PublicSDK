@@ -1,6 +1,6 @@
 //
 //  GTGroupCreationMessage.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Julietta Yaunches on 11/14/14.
 //  Copyright (c) 2014 goTenna. All rights reserved.

@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GTConstants.h"
+
+extern const int MAX_LOG_ENTRY_COUNT;
+extern NSString * const BASIC_DEBUG_LOG_NAME;
+extern NSString * const DETAIL_DEBUG_LOG_NAME;
 
 @interface GTLoggingConstants : NSObject
 

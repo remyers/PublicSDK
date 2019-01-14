@@ -2,8 +2,8 @@
 //  ViewController.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/20/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/20/18.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -12,10 +12,14 @@
 #import "ContactManager.h"
 #import "MessagingManager.h"
 #import "FirmwareManager.h"
+#import "DemoConstants.h"
+#import "Group.h"
+#import "Contact.h"
+#import "LocationManager.h"
 
 @import GoTennaSDK;
 
-NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
+static NSString * const cellID = @"cellId";
 
 @interface ViewController () <GTPairingHandlerProtocol, BluetoothPairingProtocol, FirmwareManagerProtocol>
 
@@ -26,18 +30,24 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
 @property (nonatomic, strong) NSString *firmwareUpdateStatus;
 @property (nonatomic, strong) Group *selectedGroup;
 
+@property (nonatomic, strong) NSString *oldStateString;
+//@property (nonatomic, strong) GTMeshGeofence *geofence;
+//@property (nonatomic, strong) LocationManager *locationManager;
+#warning Uncomment the references to GTMeshGeoFence & LocationManager for Mesh frequency setting
 @end
 
 @implementation ViewController
 
-# pragma mark - Actions
+//MARK:- actions
 
 - (IBAction)connect:(id)sender {
-    if ([self.connectBarItem.title isEqualToString:@"Disconnect"]) {
+    
+    BOOL isConnected = [[BluetoothConnectionManager shared] isConnected];
+    
+    if (isConnected) {
         [self disconnectFromGoTenna];
     } else {
         [self scanForNewGoTenna];
-        self.connectBarItem.title = @"Disconnect";
     }
 }
 
@@ -49,33 +59,29 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
                                                                    message:@"Select a device to scan for."
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *v1 = [UIAlertAction actionWithTitle:@"goTenna v1" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[BluetoothConnectionManager shared] setDevice:GTDeviceTypeGoTenna];
+    UIAlertAction *pro = [UIAlertAction actionWithTitle:@"goTenna Pro X" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[BluetoothConnectionManager shared] setDevice:GTDeviceTypePro];
         [[GTPairingManager shared] initiateScanningConnect];
+        [self.connectBarItem setTitle:@"Connecting"];
     }];
     
     UIAlertAction *mesh = [UIAlertAction actionWithTitle:@"goTenna Mesh" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[BluetoothConnectionManager shared] setDevice:GTDeviceTypeMesh];
         [[GTPairingManager shared] initiateScanningConnect];
+        [self.connectBarItem setTitle:@"Connecting"];
     }];
     
-    [alert addAction:v1];
+    [alert addAction:pro];
     [alert addAction:mesh];
     
     [self presentViewController:alert animated:YES completion:nil];
-    
-    self.connectBarItem.title = @"Connect";
-    self.connectBarItem.enabled = NO;
 }
 
 - (void)disconnectFromGoTenna {
     [[GTPairingManager shared] setShouldReconnect:NO];
     [[GTPairingManager shared] initiateDisconnect];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:[GTConfig forgetThisDeviceKey]];
-    
-    self.connectBarItem.title = @"Connect";
-    self.connectBarItem.enabled = YES;
-    self.tableView.userInteractionEnabled = NO;
+    [self.connectBarItem setTitle:@"Connect"];
 }
 
 - (void)chooseDemoUser {
@@ -100,13 +106,32 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
         [alert addAction:action];
     }
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // nothing
+    }];
     [alert addAction:cancel];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)chooseGroup {
+    
+    if ([[[ContactManager sharedManager] allGroups] count] == 0) {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"You must be invited by another demo user to send a group message or create a group yourself."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            // nothing
+        }];
+        
+        [alert addAction:cancel];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Group"
                                                                    message:@"Select a group"
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -130,7 +155,7 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-# pragma mark - Device Actions
+//MARK:- device actions
 
 - (void)sendEchoWithBlock:(void (^)(BOOL success))block {
     [[GTCommandCenter shared] sendEchoCommand:^(GTResponse *response) {
@@ -161,25 +186,25 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     block(YES);
 }
 
-# pragma mark - GTPairingHandlerProtocol
+//MARK:- pairing handler protocol
 
 - (void)updateState:(GTConnectionState)state {
     switch (state) {
         case Disconnected:
-            NSLog(@"[GoTenna] State: Disconnected");
+            [self.connectBarItem setTitle:@"Connect"];
+            [self.connectBarItem setEnabled:YES];
             break;
         case Connecting:
-            NSLog(@"[GoTenna] State: Connecting");
+            [self.connectBarItem setTitle:@"Connecting"];
+            [self.connectBarItem setEnabled:NO];
             break;
         case Connected:
-            NSLog(@"[GoTenna] State: Connected");
+            [self.connectBarItem setTitle:@"Disconnect"];
+            [self.connectBarItem setEnabled:YES];
             
             if (![[UserDataStore shared] currentUser]) {
                 [self chooseDemoUser];
             } else {
-                self.connectBarItem.enabled = YES;
-                self.tableView.userInteractionEnabled = YES;
-                
                 // Ensure GID has been set to current device
                 if ([[UserDataStore shared] currentUser]) {
                     [self sendSetGID:[[UserDataStore shared] currentUser].gId name:[[UserDataStore shared] currentUser].name withBlock:^(BOOL success) {
@@ -189,11 +214,44 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
                     }];
                 }
             }
+
+            if ([BluetoothConnectionManager shared].isProDevice) {
+                
+                GTFrequencyData *frequencyData = [self createExampleFrequencySlot];
+                [[GTFrequencySync sharedInstance] setOnSyncSuccess:^{
+                    NSLog(@"Successfully sent frequency values to firmware");
+                }];
+                
+                [[GTFrequencySync sharedInstance] setOnSyncFailed:^(NSError *error) {
+                    NSLog(@"Failed to send frequency values to firmware. Error: %@",error);
+                }];
+                
+                [[GTFrequencySync sharedInstance] syncFrequencySettingsWithSlot:frequencyData];
+            }
+            else if ([BluetoothConnectionManager shared].isMeshDevice) {
+                /*[self.locationManager retrieveMyLocation:^(CLLocation *myLocation) {
+                    // Send up location once we have our current location
+                    [self.geofence regionIDForLocation:myLocation.coordinate
+                                      regionIDResponse:^(RegionID regionID, BOOL regionFound) {
+                                          if ([[BluetoothConnectionManager shared] isConnected]) {
+                                              [[GTCommandCenter shared] sendSetGeoRegion:regionID onResponse:^(GTResponse *res) {
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      NSLog(@"RegionID (%@) %@ on goTenna for region %@",@(regionID),(res.responsePositive ? @"set" : @"not set"),[RegionBound regionNameFromId:regionID]);
+                                                  });
+                                              } onError:^(NSError *err) {
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      NSLog(@"Set Region Error: %@",err);
+                                                  });
+                                              }];
+                                          }
+                                      }];
+                }];*/
+            }
             break;
     }
 }
 
-# pragma mark - FirmwareManagerProtocol
+//MARK:- firmware protocol
 
 - (void)firmwareManager:(FirmwareManager *)firmwareManager didUpdateState:(FirmwareUpdateState)state progress:(float)progress {
     NSString *stateString = nil;
@@ -218,12 +276,17 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
             stateString = @"Failed";
             break;
     }
-    
     self.firmwareUpdateStatus = stateString;
-    [self reloadSection:3];
+    
+    // prevent flickering
+    if (![stateString isEqualToString:self.oldStateString]) {
+        [self reloadSection:3];
+    }
+
+    self.oldStateString = stateString;
 }
 
-# pragma mark - BluetoothPairingProtocol
+//MARK:- bluetooth protocol
 
 - (void)bluetoothPoweredOn {
     // Bluetooth enabled
@@ -248,7 +311,7 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     [self showAlertWithTitle:@"GoTenna" message:@"Your device was disconnected."];
 }
 
-# pragma mark - UITableView
+//MARK:- tableview delegate/datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
@@ -287,18 +350,18 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellId = @"CellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     return [self configureCell:cell forIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self handleActionForIndexPath:indexPath];
+    if ([self checkAndShowConnection]) {
+        [self handleActionForIndexPath:indexPath];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-# pragma mark - Helpers
+//MARK:- helpers
 
 - (UITableViewCell *)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     NSString *key = nil, *value = nil;
@@ -349,7 +412,6 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
                 break;
         }
     }
-    
     // Update Firmware
     else {
         switch (indexPath.row) {
@@ -390,29 +452,33 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     else if (indexPath.section == 2) {
         GTGIDType conversationType = ShoutGID;
         
-        switch (indexPath.row) {
-            case 0:
-                conversationType = ShoutGID;
-                break;
-            case 1:
-                conversationType = OneToOneGID;
-                break;
-            case 2: {
-                [self performSegueWithIdentifier:@"ToGroupCreate" sender:nil];
-                return;
+        if (![[UserDataStore shared] currentUser]) {
+            [self chooseDemoUser];
+        } else {
+            switch (indexPath.row) {
+                case 0:
+                    conversationType = ShoutGID;
+                    break;
+                case 1:
+                    conversationType = OneToOneGID;
+                    break;
+                case 2: {
+                    [self performSegueWithIdentifier:@"ToGroupCreate" sender:nil];
+                    return;
+                }
+                    break;
+                case 3: {
+                    conversationType = GroupGID;
+                    [self chooseGroup];
+                    return;
+                }
+                    break;
             }
-                break;
-            case 3: {
-                conversationType = GroupGID;
-                [self chooseGroup];
-                return;
-            }
-                break;
-        }
-        
-        [self performSegueWithIdentifier:@"ChatSegue" sender:@(conversationType)];
+            
+            [self performSegueWithIdentifier:@"ChatSegue" sender:@(conversationType)];
+
+        }        
     }
-    
     // Update Firmware
     else {
         if (indexPath.section == 3 && indexPath.row == 0) {
@@ -430,9 +496,9 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
 }
 
 - (void)handleGroupCreated:(NSNotification *)notification {
-    if (notification.name == kGroupWasCreatedNotification) {
-        Group *group = notification.userInfo[@"group"];
-        NSString *message = [NSString stringWithFormat:@"You were added to a group along with %lu others.", (unsigned long)[group.groupMembers count] - 1];
+    if (notification.name == kGroupCreatedNotification) {
+        Group *group = notification.userInfo[kGroupCreatedKey];
+        NSString *message = [NSString stringWithFormat:@"You were added to a group of %lu members.", (unsigned long)[group.groupMembers count] - 1];
         
         [self showAlertWithTitle:@"Added to Group" message:message];
     }
@@ -449,11 +515,15 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
 - (void)promptFirmwareUpdate {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Firmware update" message:@"Are you sure you'd like to update your device's firmware?" preferredStyle:UIAlertControllerStyleAlert];
     
+    __weak typeof(self) weakSelf = self;
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Begin update" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        self.firmwareManager = [[FirmwareManager alloc] initWithDelegate:self];
+        weakSelf.firmwareManager = [[FirmwareManager alloc] initWithDelegate:weakSelf];
         
-        if (![self.firmwareManager isUpdatingFirmware]) {
-            [self.firmwareManager beginFirmwareUpdate];
+        if (![weakSelf.firmwareManager isUpdatingFirmware]) {
+            [weakSelf.firmwareManager beginFirmwareUpdate:^(NSError * error) {
+                NSString *errmsg = [NSString stringWithFormat:@"Maybe try using the native app to update the unit's firmware - %@", error.localizedDescription];
+                [weakSelf showAlertWithTitle:@"Firmware error" message:errmsg];
+            }];
         }
     }];
     
@@ -465,7 +535,17 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-# pragma mark - Navigation
+- (BOOL)checkAndShowConnection {
+    BluetoothConnectionManager *manager = [BluetoothConnectionManager shared];
+    if ([manager isConnected]) {
+        return YES;
+    } else {
+        [self showAlertWithTitle:nil message:@"Connect your goTenna!"];
+        return NO;
+    }
+}
+
+//MARK:- navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ChatSegue"])  {
@@ -477,16 +557,19 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
     }
 }
 
-# pragma mark - Lifecycle
+//MARK:- lifecycle
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGroupCreated:) name:kGroupWasCreatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGroupCreated:) name:kGroupCreatedNotification object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //self.geofence = [[GTMeshGeofence alloc] init];
+    //self.locationManager = [[LocationManager alloc] init];
     
     // Assign pairing handler
     [[GTPairingManager shared] setPairingHandler:self];
@@ -495,6 +578,33 @@ NSString * const kGroupWasCreatedNotification = @"kGroupCreatedNotification";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+//MARK:- Create frequency
+
+- (GTFrequencyData *)createExampleFrequencySlot
+{
+    GTFrequencyData *frequencyData = [[GTFrequencyData alloc] init];
+    [frequencyData setMaxPowerWatts:[FrequencySetPowerLevel doubleForData:PowerLevel_OneHalf]];
+    [frequencyData setBandwidth:k11_80_kHZ];
+    
+    // There is a default set of frequencies that a slot can get populated with if you do not know what to use
+    NSMutableArray<GTFrequencyChannelData*> *list = [NSMutableArray array];
+    [list addObject:[[GTFrequencyChannelData alloc] initWithFrequency:150000000
+                                                     isControlChannel:YES]];
+    [list addObject:[[GTFrequencyChannelData alloc] initWithFrequency:151000000
+                                                     isControlChannel:YES]];
+    [list addObject:[[GTFrequencyChannelData alloc] initWithFrequency:151000000
+                                                     isControlChannel:NO]];
+    [list addObject:[[GTFrequencyChannelData alloc] initWithFrequency:151025000
+                                                     isControlChannel:NO]];
+    [frequencyData setChannelList:list];
+    
+    return frequencyData;
 }
 
 @end

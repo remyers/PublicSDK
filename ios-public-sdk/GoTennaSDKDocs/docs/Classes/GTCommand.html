@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GTCommand Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/GTCommand" class="dashAnchor"></a>
+    <a title="GTCommand Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">GoTennaSDK Docs</a> (23% documented)</p>
+        <p class="header-right"><a href="https://github.com/gotenna/PublicSDK"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">GoTennaSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        GTCommand Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Categories.html">Categories</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Categories/NSArray(FrequencyOperations).html">NSArray(FrequencyOperations)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSArray(GTHelpers).html">NSArray(GTHelpers)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSData(ByteOperation).html">NSData(ByteOperation)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSData(ByteOperations).html">NSData(ByteOperations)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSData(BytesToPrimitiveArray).html">NSData(BytesToPrimitiveArray)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSData(GTHelper).html">NSData(GTHelper)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSDate(GTLogging).html">NSDate(GTLogging)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSDictionary(Parsing).html">NSDictionary(Parsing)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSMutableArray(GTHelpers).html">NSMutableArray(GTHelpers)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSNumber(Utilities).html">NSNumber(Utilities)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSString(GTFormatting).html">NSString(GTFormatting)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/NSString(Util).html">NSString(Util)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AntennaQuality.html">AntennaQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BluetoothConnectionManager.html">BluetoothConnectionManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BluetoothDebugValues.html">BluetoothDebugValues</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ConvertToString.html">ConvertToString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EncryptionCounterManager.html">EncryptionCounterManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FrequencySetPowerLevel.html">FrequencySetPowerLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GIDManager.html">GIDManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTBaseMessageData.html">GTBaseMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTCircleMessageData.html">GTCircleMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTCommand.html">GTCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTCommandCenter.html">GTCommandCenter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTCommandValidator.html">GTCommandValidator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTCommunicationLogger.html">GTCommunicationLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTConfig.html">GTConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTDataRate.html">GTDataRate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTDataRateMask.html">GTDataRateMask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTDataSerializer.html">GTDataSerializer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTDataTypes.html">GTDataTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTDocumentManager.html">GTDocumentManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTError.html">GTError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTEventNotifier.html">GTEventNotifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFileLogger.html">GTFileLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFirmwareDownloadTaskManager.html">GTFirmwareDownloadTaskManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFirmwareInstallationManager.html">GTFirmwareInstallationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFirmwareRetrieverFactory.html">GTFirmwareRetrieverFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFirmwareVersion.html">GTFirmwareVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFrequencyChannelData.html">GTFrequencyChannelData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFrequencyData.html">GTFrequencyData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFrequencySlotData.html">GTFrequencySlotData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFrequencySync.html">GTFrequencySync</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTFrequencyValidation.html">GTFrequencyValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTGid.html">GTGid</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTGroupCreationMessageData.html">GTGroupCreationMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTLocationMessageData.html">GTLocationMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTLocationOnlyMessageData.html">GTLocationOnlyMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTLocationRequestOnlyMessageData.html">GTLocationRequestOnlyMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTLoggingConstants.html">GTLoggingConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTMeshAckHandler.html">GTMeshAckHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTMeshGeofence.html">GTMeshGeofence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTMessageData.html">GTMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTNackError.html">GTNackError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTNetRelayMessageData.html">GTNetRelayMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTNetRelayRequestMessageData.html">GTNetRelayRequestMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTNetRelaySuccessResponseMessageData.html">GTNetRelaySuccessResponseMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTPairingConnectionState.html">GTPairingConnectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTPairingManager.html">GTPairingManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTPerimeterMessageData.html">GTPerimeterMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTPeripheralManager.html">GTPeripheralManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTPingTextOnlyMessageData.html">GTPingTextOnlyMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTReachability.html">GTReachability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTRectangleMessageData.html">GTRectangleMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTResettingService.html">GTResettingService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTResponse.html">GTResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTRouteMessageData.html">GTRouteMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTSecurityService.html">GTSecurityService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTSendCommand.html">GTSendCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTShoutEncryptionManager.html">GTShoutEncryptionManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTStoreDateTime.html">GTStoreDateTime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTSystemInfo.html">GTSystemInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTSystemInfoStore.html">GTSystemInfoStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTTextAndFrequencySlotMessageData.html">GTTextAndFrequencySlotMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTTextAndLocationMessageData.html">GTTextAndLocationMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTTextAndLocationRequestMessageData.html">GTTextAndLocationRequestMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTTextOnlyMessageData.html">GTTextOnlyMessageData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GTUserDefaults.html">GTUserDefaults</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GoTenna.html">GoTenna</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupAckInfo.html">GroupAckInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupAckMemberManager.html">GroupAckMemberManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupSecretManager.html">GroupSecretManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PostRequestTask.html">PostRequestTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PublicKeyManager.html">PublicKeyManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RegionBound.html">RegionBound</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SystemInfoResponseData.html">SystemInfoResponseData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UserDataStore.html">UserDataStore</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@AUTOMATIC_LOCATION_SHARING_PIN_OUTDATED">AUTOMATIC_LOCATION_SHARING_PIN_OUTDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@AUTO_LOCATION_SHARE_STATUS_CHANGED">AUTO_LOCATION_SHARE_STATUS_CHANGED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@BASIC_DEBUG_LOG_NAME">BASIC_DEBUG_LOG_NAME</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@BLUETOOTH_STATUS_UPDATED">BLUETOOTH_STATUS_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@CONTACT_DELETED">CONTACT_DELETED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@CONTACT_DELETED_REFRESH">CONTACT_DELETED_REFRESH</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@CONTACT_LIST_UPDATED">CONTACT_LIST_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@CONVERSATION_GID_DATA_KEY">CONVERSATION_GID_DATA_KEY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@CONVERSATION_UPDATED">CONVERSATION_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@DETAIL_DEBUG_LOG_NAME">DETAIL_DEBUG_LOG_NAME</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@EMERGENCY_GID">EMERGENCY_GID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FIRMWARE_DEV_BUCKET">FIRMWARE_DEV_BUCKET</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FIRMWARE_PRODUCTION_BUCKET">FIRMWARE_PRODUCTION_BUCKET</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FIRMWARE_STAGING_BUCKET">FIRMWARE_STAGING_BUCKET</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FREQUENCY_SLOT_RECEIVED">FREQUENCY_SLOT_RECEIVED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GROUP_MEMBER_UPDATED">GROUP_MEMBER_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTBATTERY_CHARGING_STATE">GTBATTERY_CHARGING_STATE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTCONNECTION_ANTENNA_BAD">GTCONNECTION_ANTENNA_BAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTCONNECTION_ESTABLISHED">GTCONNECTION_ESTABLISHED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTCONNECTION_LOST">GTCONNECTION_LOST</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTCONNECTION_LOST_AFTER_RETRYING">GTCONNECTION_LOST_AFTER_RETRYING</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTDFUFIRMWARE_COMPLETE">GTDFUFIRMWARE_COMPLETE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTDFUFIRMWARE_ERROR">GTDFUFIRMWARE_ERROR</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTDFUFIRMWARE_PROCESSING">GTDFUFIRMWARE_PROCESSING</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNEW_FIRMWARE_VERSION_AVAILABLE">GTNEW_FIRMWARE_VERSION_AVAILABLE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNEW_HALT_TEST_RESULTS">GTNEW_HALT_TEST_RESULTS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_ANALYTICS_EVENT">GTNOTIFICATIONS_ANALYTICS_EVENT</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_LOGGING_EVENT">GTNOTIFICATIONS_LOGGING_EVENT</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_PARSING_ERROR_OCCURED">GTNOTIFICATIONS_PARSING_ERROR_OCCURED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_RSSI_READING_EVENT">GTNOTIFICATIONS_RSSI_READING_EVENT</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_SEND_ON_LISTENONLY_MODE">GTNOTIFICATIONS_SEND_ON_LISTENONLY_MODE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_SEND_ON_RELAY_MODE">GTNOTIFICATIONS_SEND_ON_RELAY_MODE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_WRITE_ERROR_OCCURED">GTNOTIFICATIONS_WRITE_ERROR_OCCURED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTNOTIFICATIONS_WRITE_TIMEOUT_OCCURED">GTNOTIFICATIONS_WRITE_TIMEOUT_OCCURED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTTOKEN_REFRESH_UNAUTHORIZED">GTTOKEN_REFRESH_UNAUTHORIZED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GTUSER_DISCONNECT">GTUSER_DISCONNECT</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GT_NOTIFICATION_PINS_REFRESH">GT_NOTIFICATION_PINS_REFRESH</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GT_NOTIFICATION_PIN_SAVED">GT_NOTIFICATION_PIN_SAVED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GT_NOTIFICATION_SEARCH_ANNOTATION_SAVED">GT_NOTIFICATION_SEARCH_ANNOTATION_SAVED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GT_UPDATED_SYSTEM_INFO">GT_UPDATED_SYSTEM_INFO</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GoTennaSDKVersionNumber">GoTennaSDKVersionNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@GoTennaSDKVersionString">GoTennaSDKVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@MAX_LOG_ENTRY_COUNT">MAX_LOG_ENTRY_COUNT</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@NEW_GROUP_CREATED">NEW_GROUP_CREATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@NEW_MAP_DOWNLOADED">NEW_MAP_DOWNLOADED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@ONE_TO_ONE_ACTIVITY_FINISHED">ONE_TO_ONE_ACTIVITY_FINISHED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@ONE_TO_ONE_FAILED">ONE_TO_ONE_FAILED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@ONE_TO_ONE_FAILED_MULTIPLE">ONE_TO_ONE_FAILED_MULTIPLE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@ONE_TO_ONE_QUICK_REDO">ONE_TO_ONE_QUICK_REDO</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@ONE_TO_ONE_SUCCEEDED">ONE_TO_ONE_SUCCEEDED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@OUTGOING_MESSAGE_RESPONSE_RECEIVED">OUTGOING_MESSAGE_RESPONSE_RECEIVED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@SENDER_GID_DATA_KEY">SENDER_GID_DATA_KEY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@SHOUT_GID">SHOUT_GID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@SIGNIFICANT_USER_LOCATION_UPDATED">SIGNIFICANT_USER_LOCATION_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@USER_BLOCK_STATUS_UPDATED">USER_BLOCK_STATUS_UPDATED</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kAckStatuseEventParamTitle">kAckStatuseEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kAddressedGIDEventParamTitle">kAddressedGIDEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kBasePortalURLKey">kBasePortalURLKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCustomFrequencySetsBackup">kCustomFrequencySetsBackup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kDebugMaxHopCountKey">kDebugMaxHopCountKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kDebugMinHopCountKey">kDebugMinHopCountKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kEnabledFrequencySlot">kEnabledFrequencySlot</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kFrequencySetsBackup">kFrequencySetsBackup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_call_sign">kGTFrequencyDataKey_call_sign</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_channel_list">kGTFrequencyDataKey_channel_list</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_datarate_id">kGTFrequencyDataKey_datarate_id</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_datarate_mask_id">kGTFrequencyDataKey_datarate_mask_id</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_description">kGTFrequencyDataKey_description</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_id">kGTFrequencyDataKey_id</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_instructions">kGTFrequencyDataKey_instructions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_max_power_watts">kGTFrequencyDataKey_max_power_watts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_modified">kGTFrequencyDataKey_modified</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyDataKey_name">kGTFrequencyDataKey_name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorDoesNotHaveControlAndData">kGTFrequencyErrorDoesNotHaveControlAndData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorHasDuplicates">kGTFrequencyErrorHasDuplicates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorHasMoreThanThirteenDataChannels">kGTFrequencyErrorHasMoreThanThirteenDataChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorHasMoreThanThreeChannels">kGTFrequencyErrorHasMoreThanThreeChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorIsIncorrectRange">kGTFrequencyErrorIsIncorrectRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGTFrequencyErrorIsIncorrectSpacing">kGTFrequencyErrorIsIncorrectSpacing</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kGroupCreateGIDEventParamTitle">kGroupCreateGIDEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMaxFrequencyControlChannels">kMaxFrequencyControlChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMaxFrequencyDataChannels">kMaxFrequencyDataChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMaximumFrequencyUHF">kMaximumFrequencyUHF</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMaximumFrequencyVHF">kMaximumFrequencyVHF</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMessageContentTypeEventParamTitle">kMessageContentTypeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMessageHashIDEventParamTitle">kMessageHashIDEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMessageTypeEventParamTitle">kMessageTypeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMinimumFrequencyUHF">kMinimumFrequencyUHF</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kMinimumFrequencyVHF">kMinimumFrequencyVHF</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kNewKeyRequestFromSameGid">kNewKeyRequestFromSameGid</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kOutgoingMessageEventTag">kOutgoingMessageEventTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kOutgoingPinLatitude">kOutgoingPinLatitude</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kOutgoingPinLongitude">kOutgoingPinLongitude</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kOutgoingPinName">kOutgoingPinName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kReceivedMessageEventTag">kReceivedMessageEventTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kReceiverLatitudeEventParamTitle">kReceiverLatitudeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kReceiverLongitudeEventParamTitle">kReceiverLongitudeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kReceivingGIDEventParamTitle">kReceivingGIDEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kSenderGIDEventParamTitle">kSenderGIDEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kSenderLatitudeEventParamTitle">kSenderLatitudeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kSenderLongitudeEventParamTitle">kSenderLongitudeEventParamTitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kTokenRefreshUnauthorized">kTokenRefreshUnauthorized</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/GTAntennaQualityLevel.html">GTAntennaQualityLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GTBatteryStatusLevel.html">GTBatteryStatusLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GTDeviceType.html">GTDeviceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GTNackErrorTypes.html">GTNackErrorTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/HTTPMethod_Type.html">HTTPMethod_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PowerLevel_Type.html">PowerLevel_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RegionID.html">RegionID</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/BluetoothPairingProtocol.html">BluetoothPairingProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTDigestHMACGeneratorProtocol.html">GTDigestHMACGeneratorProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTFirmwareInstallationProgressProtocol.html">GTFirmwareInstallationProgressProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTFirmwareRetrieveProtocol.html">GTFirmwareRetrieveProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTLogExportProtocol.html">GTLogExportProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTMessageDataProtocol.html">GTMessageDataProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/GTPairingHandlerProtocol.html">GTPairingHandlerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/NRFProtocol.html">NRFProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/NRFScanResponseProtocol.html">NRFScanResponseProtocol</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Type Definitions/Bandwidth.html">Bandwidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/ChannelSweepType.html">ChannelSweepType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/EventNotifierLogType.html">EventNotifierLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions.html#/c:GTFirmwareRetrieveProtocol.h@T@FileCheckCompletion">FileCheckCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTBatteryStatus.html">GTBatteryStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTCommandPriority.html">GTCommandPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTCommandResponseType.html">GTCommandResponseType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTConnectionState.html">GTConnectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTFirmwareWriterFailureState.html">GTFirmwareWriterFailureState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTGIDType.html">GTGIDType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTMessageType.html">GTMessageType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions/GTOutgoingMessageStatus.html">GTOutgoingMessageStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions.html#/c:PostRequestTask.h@T@NetworkCallbackHandler">NetworkCallbackHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type Definitions.html#/c:GTFirmwareRetrieveProtocol.h@T@RetrievalCompletion">RetrievalCompletion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>GTCommand</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">GTCommand</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Command object used to send data to the goTenna device</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)packets"></a>
+                    <a name="//apple_ref/objc/Property/packets" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)packets">packets</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Data packets that are sent to the goTenna</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">packets</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">packets</span><span class="p">:</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L22">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)responseReceived"></a>
+                    <a name="//apple_ref/objc/Property/responseReceived" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)responseReceived">responseReceived</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether a response has been received from the goTenna yet</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">responseReceived</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">responseReceived</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)isPausable"></a>
+                    <a name="//apple_ref/objc/Property/isPausable" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)isPausable">isPausable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Can this operation be paused (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isPausable</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isPausable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L26">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)shouldNotResendWithMoreHops"></a>
+                    <a name="//apple_ref/objc/Property/shouldNotResendWithMoreHops" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)shouldNotResendWithMoreHops">shouldNotResendWithMoreHops</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Should not resend with more hops (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">shouldNotResendWithMoreHops</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">shouldNotResendWithMoreHops</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)processResponse"></a>
+                    <a name="//apple_ref/objc/Property/processResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)processResponse">processResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Response block to be set for when a positive (ACK) or negative (NACK) response is received from the device</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n"><a href="../Classes/GTResponse.html">GTResponse</a></span> <span class="o">*</span><span class="p">)</span> <span class="n">processResponse</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">processResponse</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/GTResponse.html">GTResponse</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L30">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)onError"></a>
+                    <a name="//apple_ref/objc/Property/onError" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)onError">onError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Response block to be set for when an error response is received from the device</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span> <span class="n">onError</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L32">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)commandCode"></a>
+                    <a name="//apple_ref/objc/Property/commandCode" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)commandCode">commandCode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command code specific to the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">commandCode</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">commandCode</span><span class="p">:</span> <span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">Int8</span><span class="o">&gt;!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L34">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)rawData"></a>
+                    <a name="//apple_ref/objc/Property/rawData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)rawData">rawData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Raw data being used by the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSData</span> <span class="o">*</span><span class="n">rawData</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">rawData</span><span class="p">:</span> <span class="kt">Data</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L36">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)messageHeaderData"></a>
+                    <a name="//apple_ref/objc/Property/messageHeaderData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)messageHeaderData">messageHeaderData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The message header data used for packet/s transmission</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSData</span> <span class="o">*</span><span class="n">messageHeaderData</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">messageHeaderData</span><span class="p">:</span> <span class="kt">Data</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)pubKeyHash"></a>
+                    <a name="//apple_ref/objc/Property/pubKeyHash" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)pubKeyHash">pubKeyHash</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The hash for the public key</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSData</span> <span class="o">*</span><span class="n">pubKeyHash</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">pubKeyHash</span><span class="p">:</span> <span class="kt">Data</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L40">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)messageData"></a>
+                    <a name="//apple_ref/objc/Property/messageData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)messageData">messageData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Message data being used by the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSData</span> <span class="o">*</span><span class="n">messageData</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">messageData</span><span class="p">:</span> <span class="kt">Data</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)hopCountData"></a>
+                    <a name="//apple_ref/objc/Property/hopCountData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)hopCountData">hopCountData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The hop count as data</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSData</span> <span class="o">*</span><span class="n">hopCountData</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">hopCountData</span><span class="p">:</span> <span class="kt">Data</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L44">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)positiveResponse"></a>
+                    <a name="//apple_ref/objc/Property/positiveResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)positiveResponse">positiveResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Positive response code</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">positiveResponse</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">positiveResponse</span><span class="p">:</span> <span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">Int8</span><span class="o">&gt;!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L46">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)negativeResponse"></a>
+                    <a name="//apple_ref/objc/Property/negativeResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)negativeResponse">negativeResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Negative response code</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">negativeResponse</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">negativeResponse</span><span class="p">:</span> <span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">Int8</span><span class="o">&gt;!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L48">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)log"></a>
+                    <a name="//apple_ref/objc/Property/log" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)log">log</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command name (usually the same as the &lsquo;log&rsquo;)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">log</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">log</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)name"></a>
+                    <a name="//apple_ref/objc/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)name">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command log (usually the same as the &lsquo;name&rsquo;)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L52">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)sendAttempts"></a>
+                    <a name="//apple_ref/objc/Property/sendAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)sendAttempts">sendAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Send attempts for the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">int</span> <span class="n">sendAttempts</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">sendAttempts</span><span class="p">:</span> <span class="kt">Int32</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L54">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)timesToAttempt"></a>
+                    <a name="//apple_ref/objc/Property/timesToAttempt" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)timesToAttempt">timesToAttempt</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Send times attempted</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">int</span> <span class="n">timesToAttempt</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">timesToAttempt</span><span class="p">:</span> <span class="kt">Int32</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L56">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)commandTimeoutAmount"></a>
+                    <a name="//apple_ref/objc/Property/commandTimeoutAmount" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)commandTimeoutAmount">commandTimeoutAmount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The command time out count, in seconds</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSTimeInterval</span> <span class="n">commandTimeoutAmount</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">commandTimeoutAmount</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L58">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)seqNumber"></a>
+                    <a name="//apple_ref/objc/Property/seqNumber" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)seqNumber">seqNumber</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command sequence number</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">int</span> <span class="n">seqNumber</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">seqNumber</span><span class="p">:</span> <span class="kt">Int32</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L60">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)priority"></a>
+                    <a name="//apple_ref/objc/Property/priority" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)priority">priority</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The command priority (default <code>GTCommandPriorityVeryLow</code>)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n"><a href="../Type Definitions/GTCommandPriority.html">GTCommandPriority</a></span> <span class="n">priority</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">priority</span><span class="p">:</span> <span class="kt"><a href="../Type Definitions/GTCommandPriority.html">GTCommandPriority</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L62">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(py)priorityPrintable"></a>
+                    <a name="//apple_ref/objc/Property/priorityPrintable" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(py)priorityPrintable">priorityPrintable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>String version of the current priority of the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">priorityPrintable</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">priorityPrintable</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L64">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(im)shouldRetry"></a>
+                    <a name="//apple_ref/objc/Method/-shouldRetry" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(im)shouldRetry">-shouldRetry</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h3 id='should-retry' class='heading'>Should Retry?</h3>
+
+<p>If the command retry should occur or not (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">shouldRetry</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">shouldRetry</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BOOL</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L73">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(im)prepareForNextAttempt"></a>
+                    <a name="//apple_ref/objc/Method/-prepareForNextAttempt" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(im)prepareForNextAttempt">-prepareForNextAttempt</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h3 id='prepare-for-next-attempt' class='heading'>Prepare for next attempt</h3>
+
+<p>Prepare for the next attempt (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">prepareForNextAttempt</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">prepareForNextAttempt</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L80">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(im)initiateWriteTimeoutOnTimeout:"></a>
+                    <a name="//apple_ref/objc/Method/-initiateWriteTimeoutOnTimeout:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(im)initiateWriteTimeoutOnTimeout:">-initiateWriteTimeoutOnTimeout:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h3 id='initiate-timeout' class='heading'>Initiate timeout</h3>
+
+<p>Set timeout block (generally for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">initiateWriteTimeoutOnTimeout</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="nv">onTimeout</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">initiateWriteTimeout</span><span class="p">(</span><span class="nv">onTimeout</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span><span class="o">!</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onTimeout</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called when the command times out.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L89">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(im)invalidateTimeout"></a>
+                    <a name="//apple_ref/objc/Method/-invalidateTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(im)invalidateTimeout">-invalidateTimeout</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h3 id='get-resend-id' class='heading'>Get Resend ID</h3>
+
+<p>Get the resend ID (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">invalidateTimeout</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">invalidateTimeout</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onResponse</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called when the command finishes. See the @c responsePositive property for command success.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Int</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L99">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)GTCommand(im)getResendId"></a>
+                    <a name="//apple_ref/objc/Method/-getResendId" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)GTCommand(im)getResendId">-getResendId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h3 id='get-resend-id' class='heading'>Get Resend ID</h3>
+
+<p>Get the resend ID (for internal use)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">getResendId</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getResendId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int32</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Int</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/gotenna/PublicSDK/tree/master/GoTennaSDK/GTCommand.h#L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="http://goTenna.com" target="_blank" rel="external">goTenna</a>. All rights reserved. (Last updated: 2019-01-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

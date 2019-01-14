@@ -4,19 +4,35 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const kMessageTypeTextOnly;
-extern NSString *const kMessageTypeTextAndLocation;
-extern NSString *const kMessageTypeLocationOnly;
-extern NSString *const kMessageTypeLocationRequestOnly;
-extern NSString *const kMessageTypeLocationRequestAndText;
-extern NSString *const kMessageTypeSetGroupGID;
-extern NSString *const kMessageTypeLogOnTextOnly;
-extern NSString *const kMessageTypePingTextOnly;
-extern NSString *const kMessageTypeFirmwarePublicKeyResponse;
-extern NSString *const kMessageTypeUserPublicKeyResponse;
-extern NSString *const kMessageTypePublicKeyRequest;
-extern NSString *const kMessageTypeMeshPublicKeyRequest;
-extern NSString *const kMessageTypeMeshPublicKeyResponse;
+extern NSString * const kMessageTypeTextOnly;
+extern NSString * const kMessageTypeTextAndLocation;
+extern NSString * const kMessageTypeLocationOnly;
+extern NSString * const kMessageTypeLocationRequestOnly;
+extern NSString * const kMessageTypeLocationRequestAndText;
+extern NSString * const kMessageTypeSetGroupGID;
+extern NSString * const kMessageTypePingTextOnly;
+extern NSString * const kMessageTypeFirmwarePublicKeyResponse;
+extern NSString * const kMessageTypeUserPublicKeyResponse;
+extern NSString * const kMessageTypePublicKeyRequest;
+extern NSString * const kMessageTypeNetRelayRequest;
+extern NSString * const kMessageTypeNetRelaySuccessResponse;
+
+// Mesh
+extern NSString * const kMessageTypeMeshPublicKeyRequest;
+extern NSString * const kMessageTypeMeshPublicKeyResponse;
+
+// Pro
+extern NSString * const kMessageTypeTextAndFrequencySlot;
+extern NSString * const kMessageTypeFrequencySlotOnly;
+extern NSString * const kMessageTypeTextAndMapPerimeter;
+extern NSString * const kMessageTypeMapPerimeterOnly;
+extern NSString * const kMessageTypeTextAndMapRoute;
+extern NSString * const kMessageTypeMapRouteOnly;
+extern NSString * const kMessageTypeTextAndCircle;
+extern NSString * const kMessageTypeCircleOnly;
+extern NSString * const kMessageTypeTextAndSquare;
+extern NSString * const kMessageTypeSquareOnly;
+extern NSString * const kMessageTypeAudio;
 
 extern const char *gtSetGIDCommandCode;
 extern const char *gtSetGIDResponseCode;
@@ -86,6 +102,10 @@ extern const char *gtActivateAntennaSweepCommandCode;
 extern const char *gtActivateAntennaSweepResponseCode;
 extern const char *gtActivateAntennaSweepFailureCode;
 
+extern const char *gtChannelScanCommandCode;
+extern const char *gtChannelScanResponseCode;
+extern const char *gtChannelScanFailureCode;
+
 extern const char *gtFrequencyModeCommandCode;
 extern const char *gtFrequencyModeResponseCode;
 extern const char *gtFrequencyModeFailureCode;
@@ -147,6 +167,34 @@ extern const char *gtSetGeoRegionFailureCode;
 extern const char *gtGetGeoRegionCommandCode;
 extern const char *gtGetGeoRegionResponseCode;
 extern const char *gtGetGeoRegionFailureCode;
+
+extern const char *gtGetConfigPropertyCommandCode;
+extern const char *gtGetConfigPropertyResponseCode;
+extern const char *gtGetConfigPropertyFailureCode;
+
+extern const char *gtGetBdiInfoCommandCode;
+extern const char *gtGetBdiInfoResponseCode;
+extern const char *gtGetBdiInfoFailureCode;
+
+extern const char *gtGetDdiInfoCommandCode;
+extern const char *gtGetDdiInfoResponseCode;
+extern const char *gtGetDdiInfoFailureCode;
+
+extern const char *gtPullDeviceAlertCommandCode;
+extern const char *gtPullDeviceAlertResponseCode;
+extern const char *gtPullDeviceAlertFailureCode;
+
+extern const char *gtStoreEmergencyMessageCommandCode;
+extern const char *gtStoreEmergencyMessagetResponseCode;
+extern const char *gtStoreEmergencyMessageFailureCode;
+
+extern const char *gtGetBluetoothDebugValuesCommandCode;
+extern const char *gtGetBluetoothDebugValuesResponseCode;
+extern const char *gtGetBluetoothDebugValuesFailureCode;
+
+extern const char *gtResetBluetoothDebugValuesCommandCode;
+extern const char *gtResetBluetoothDebugValuesResponseCode;
+extern const char *gtResetBluetoothDebugValuesFailureCode;
 
 @interface GTCommandCodeConstants : NSObject
 @end

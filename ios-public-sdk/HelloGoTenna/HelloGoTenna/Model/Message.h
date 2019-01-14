@@ -2,12 +2,12 @@
 //  Message.h
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/25/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/25/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <GoTennaSDK/GTTextOnlyMessageData.h>
+@class GTTextOnlyMessageData;
 
 typedef NS_ENUM(NSUInteger, MessageStatus) {
     MessageStatusSending,
@@ -22,8 +22,8 @@ typedef NS_ENUM(NSUInteger, MessageStatus) {
 @property (nonatomic, readonly) NSNumber *receiverGID;
 @property (nonatomic, readonly) NSDate *sentDate;
 @property (nonatomic, readonly) NSString *senderInfo;
-@property (nonatomic, assign) NSUInteger hopCount;
-@property (nonatomic, assign) MessageStatus status;
+@property (nonatomic) NSUInteger hopCount;
+@property (nonatomic, readonly) MessageStatus status;
 
 - (instancetype)initWithSenderGID:(NSNumber *)senderGID
                       receiverGID:(NSNumber *)receiverGID

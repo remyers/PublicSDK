@@ -2,8 +2,7 @@
 //  AppDelegate.h
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/20/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

@@ -2,14 +2,19 @@
 //  ChatTableDataSource.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/1/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/1/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "ChatTableDataSource.h"
-#import <GoTennaSDK/GoTennaSDK.h>
 #import "ContactManager.h"
 #import "MessagingManager.h"
+#import "Contact.h"
+#import "Message.h"
+#import "ChatCell.h"
+@import GoTennaSDK;
+
+static NSString * const cellID = @"cellId";
 
 @interface ChatTableDataSource ()
 
@@ -28,24 +33,18 @@
     self = [super init];
     
     if (self) {
-        _conversationType = conversationType;
-        _messages = [NSMutableArray array];
-        _recipients = [NSMutableArray arrayWithCapacity:4];
-        
-        if (delegate) {
-            _delegate = delegate;
-        }
+        self.conversationType = conversationType;
+        self.messages = [NSMutableArray array];
+        self.recipients = [NSMutableArray arrayWithCapacity:4];
+        self.delegate = delegate;        
     }
-    
     return self;
 }
 
 # pragma mark - Functions
 
 - (void)addMessage:(Message *)message {
-    if (![self.messages containsObject:message]) {
-        [self.messages addObject:message];
-    }
+    [self.messages addObject:message];
 }
 
 # pragma mark - Data Source
@@ -74,7 +73,9 @@
     }
     
     // Send button
-    if (section == [self sectionCount] - 1) rows = 1;
+    if (section == ([self sectionCount] - 1)) {
+        rows = 1;
+    }
     
     return rows;
 }
@@ -100,7 +101,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId" forIndexPath:indexPath];
+    ChatCell *cell = (ChatCell *)[tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     NSString *key = nil, *value = nil;
     
     if (indexPath.section == 0) {
@@ -125,8 +126,8 @@
     // Send button
     if (indexPath.section == [self sectionCount] - 1) key = @"Send Message";
     
-    cell.textLabel.text = key;
-    cell.detailTextLabel.text = value;
+    cell.chatKeyLabel.text = key;
+    cell.chatMessageLabel.text = value;
     cell.accessoryType = (value) ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = (indexPath.section == [self sectionCount] - 1) ? UITableViewCellSelectionStyleDefault : UITableViewCellSelectionStyleNone;
     
@@ -136,7 +137,7 @@
 # pragma mark - Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    ChatCell *cell = (ChatCell *)[tableView cellForRowAtIndexPath:indexPath];
     
     // Select 1-to-1 recipient
     if (indexPath.section == 0 && self.conversationType == OneToOneGID) {
@@ -158,6 +159,14 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
 }
 
 # pragma mark - Helpers

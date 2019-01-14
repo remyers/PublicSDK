@@ -2,11 +2,16 @@
 //  Contact.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/25/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/25/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "Contact.h"
+
+@interface Contact()
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSNumber *gid;
+@end
 
 @implementation Contact
 
@@ -14,8 +19,8 @@
     self = [super init];
     
     if (self) {
-        _name = name;
-        _gid = gid;
+        self.name = name;
+        self.gid = gid;
     }
     
     return self;

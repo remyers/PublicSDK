@@ -7,8 +7,7 @@
 #import "GTBaseMessageData.h"
 #import "GTMessageDataProtocol.h"
 
-@interface GTLocationRequestOnlyMessageData : GTBaseMessageData <GTMessageDataProtocol>
 
-- (instancetype)initWithReceiverGID:(NSNumber *)receiverGID onError:(NSError **)pError;
-
+@interface GTLocationRequestOnlyMessageData : GTBaseMessageData<GTMessageDataProtocol>
+- (id)initWithReceiverGID:(NSNumber *)receiverGID onError:(NSError **)pError;
 @end

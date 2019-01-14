@@ -1,9 +1,9 @@
 //
-//  GTPairingConnectionState.h
-//  goTenna SDK
+//  PairingConnectionState.h
+//  CoreBluetoothGoTenna
 //
 //  Created by JOSHUA M MAKINDA on 9/21/15.
-//  Copyright (c) 2015 JOSHUA M MAKINDA. All rights reserved.
+//  Copyright (c) 2015 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

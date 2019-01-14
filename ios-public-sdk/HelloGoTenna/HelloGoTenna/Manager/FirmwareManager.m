@@ -2,12 +2,12 @@
 //  FirmwareManager.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 8/1/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 8/1/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "FirmwareManager.h"
-#import <GoTennaSDK/GoTennaSDK.h>
+@import GoTennaSDK;
 
 @interface FirmwareManager () <GTFirmwareInstallationProgressProtocol>
 
@@ -22,23 +22,27 @@
 
 - (instancetype)initWithDelegate:(id<FirmwareManagerProtocol>)delegate {
     self = [super init];
-    
     if (self) {
-        if (delegate) {
-            _delegate = delegate;
-        }
+        self.delegate = delegate;
     }
-    
     return self;
 }
 
 # pragma mark - Functions
 
-- (void)beginFirmwareUpdate {
+- (void)beginFirmwareUpdate:(void (^)(NSError *))errorBlock {
     id<GTFirmwareRetrieveProtocol> retriever = [GTFirmwareRetrieverFactory firmwareRetrieverAmazon];
     
-    [[GTFirmwareDownloadTaskManager manager] retrieveAndStoreFirmwareUsingRetriever:retriever onCompletion:^{
-        [[GTFirmwareDownloadTaskManager manager] downloadLastRetrievedFirmwareWithProgressDelegate:self];
+    [[GTFirmwareDownloadTaskManager manager] retrieveAndStoreFirmwareUsingRetriever:retriever onCompletion:^(NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+            if (errorBlock) {
+                errorBlock(error);
+            }
+        }
+        else {
+            [[GTFirmwareDownloadTaskManager manager] downloadLastRetrievedFirmwareWithProgressDelegate:self];
+        }
     }];
 }
 
@@ -76,11 +80,11 @@
     [self updateStateWithProgress:progress];
 }
 
-- (void)updateComplete:(double)firmwareVersion {
+- (void)updateComplete:(NSString *)firmwareVersion {
     [self updateState:UpdateSucceeded];
 }
 
-- (void)updateFailed:(GTFirmwareWriterFailureState)failState version:(double)firmwareVersion {
+- (void)updateFailed:(GTFirmwareWriterFailureState)failState version:(NSString *)firmwareVersion {
     [self updateState:UpdateFailed];
 }
 

@@ -1,6 +1,6 @@
 //
 //  GTFirmwareVersionStore.h
-//  goTenna SDK
+//  GoTenna
 //
 //  Created by Julietta Yaunches on 1/15/15.
 //  Copyright (c) 2015 goTenna. All rights reserved.
@@ -20,7 +20,7 @@
 
 @property (nonatomic) BOOL blockSystemInfoQuery;
 
-- (void)storeVersionToInstall:(double)version withFileName:(NSString *)filename;
+- (void)storeVersionToInstall:(NSString *)version withFileName:(NSString *)filename;
 - (GTFirmwareVersion *)versionToInstall;
 - (GTSystemInfo *)currentSystemInfo;
 - (void)removeVersionToInstall;

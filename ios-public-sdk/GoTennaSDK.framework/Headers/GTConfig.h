@@ -1,6 +1,6 @@
 //
 // Created by Julietta Yaunches on 21/10/2014.
-// goTenna SDK
+// Copyright (c) 2014 goTenna. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,19 +17,19 @@
 + (NSInteger)minTLVlength;
 + (NSInteger)minHopCount;
 + (NSInteger)maxHopCount;
-+ (NSInteger)meshMessageTimeoutForHopCount:(NSUInteger)hopCount packetCount:(NSUInteger)packetCount;
++ (void)setMaxHopCount:(NSInteger)hops;
++ (double)meshMessageTimeoutForHopCount:(NSUInteger)hopCount;
 + (NSInteger)reconnectionScanTimeout;
 + (NSInteger)initialConnectionScanTimeout;
 + (NSUInteger)privateGIDByteLength;
 + (NSUInteger)broadcastGIDByteLength;
 + (NSInteger)maxDataPayloadLength;
 + (NSInteger)firmwareUpdateCommandTimeoutAmount;
-+ (NSTimeInterval)finalizeFirmwareCommandTimeout;
 + (NSInteger)normalCommandTimeoutAmount;
++ (NSTimeInterval)finalizeFirmwareCommandTimeout;
 + (NSInteger)resetCommandTimeoutAmount;
-+ (NSInteger)packetDataPayloadLimit;
 + (NSInteger)systemInfoQueryInterval;
-+ (NSInteger)sendMessageTimeout;
++ (double)sendMessageTimeout;
 
 + (BOOL)isRSSILoggingOn;
 + (BOOL)shouldWriteLocationToFieldTestLog;
@@ -39,7 +39,5 @@
 + (BOOL)connectionRetryEnabled;
 + (BOOL)firmwareUpdateinEnabled;
 + (BOOL)shouldAllowChatOneToOneVisualQueue;
-
-+ (NSBundle *)configBundle;
 
 @end

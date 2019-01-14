@@ -2,12 +2,23 @@
 //  Message.m
 //  HelloGoTenna
 //
-//  Created by Ryan Cohen on 7/25/17.
-//  Copyright © 2017 goTenna. All rights reserved.
+//  Created by GoTenna on 7/25/17.
+//  Copyright © 2018 goTenna. All rights reserved.
 //
 
 #import "Message.h"
 #import "ContactManager.h"
+#import "Contact.h"
+@import GoTennaSDK;
+
+@interface Message()
+@property (nonatomic, strong) NSNumber *senderGID;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, strong) NSNumber *receiverGID;
+@property (nonatomic, strong) NSDate *sentDate;
+@property (nonatomic, strong) NSString *senderInfo;
+@property (nonatomic) MessageStatus status;
+@end
 
 @implementation Message
 
@@ -23,12 +34,12 @@
     self = [super init];
     
     if (self) {
-        _senderGID = senderGID;
-        _receiverGID = receiverGID;
-        _text = text;
-        _sentDate = sentDate;
-        _status = status;
-        _senderInfo = senderInfo;
+        self.senderGID = senderGID;
+        self.receiverGID = receiverGID;
+        self.text = text;
+        self.sentDate = sentDate;
+        self.status = status;
+        self.senderInfo = senderInfo;
     }
     
     return self;
@@ -55,7 +66,7 @@
                         senderInfo:[self getSenderInfo:messageData]];
     
     if (self) {
-        _hopCount = messageData.hopCount;
+        self.hopCount = messageData.hopCount;
     }
     
     return self;
@@ -69,9 +80,10 @@
     
     if (error) {
         NSLog(@"[GoTenna] Error in: %@ %@", NSStringFromSelector(_cmd), error.localizedDescription);
+        return nil;
     }
     
-    return (messageData) ? [messageData serializeToBytes] : nil;
+    return [messageData serializeToBytes];
 }
 
 - (NSString *)getSenderInfo:(GTBaseMessageData *)messageData {
