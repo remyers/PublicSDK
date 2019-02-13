@@ -1,6 +1,13 @@
-""" sample.py - A example of using the goTenna API for a simple command line messaging application.
+""" txtenna.py - 
+Send a Bitcoin transactions using the txTenna json format with the broadcast_tx RAW_HEX TX_HASH NETWORK(m|t)
+Receive and confirm a transaction in the txTEnna json format using a remote (or local) txTenna-server. 
 
-Usage: python sample.py
+This is a modified version of sample.py from the goTenna SDK.
+
+Usage: python txtenna.py SDK_TOKEN GEO_REGION
+
+txTenna> broadcast_tx 01000000000101bf6c3ed233e8700b42c1369993c2078780015bab7067b9751b7f49f799efbffd0000000017160014f25dbf0eab0ba7e3482287ebb41a7f6d361de6efffffffff02204e00000000000017a91439cdb4242013e108337df383b1bf063561eb582687abb93b000000000017a9148b963056eedd4a02c91747ea667fc34548cab0848702483045022100e92ce9b5c91dbf1c976d10b2c5ed70d140318f3bf2123091d9071ada27a4a543022030c289d43298ca4ca9d52a4c85f95786c5e27de5881366d9154f6fe13a717f3701210204b40eff96588033722f487a52d39a345dc91413281b31909a4018efb330ba2600000000 94406beb94761fa728a2cde836ca636ecd3c51cbc0febc87a968cb8522ce7cc1 m
+
 """
 from __future__ import print_function
 import cmd # for the command line application
@@ -12,6 +19,10 @@ import requests
 import json
 from threading import Thread
 from time import sleep
+from zmq.utils import z85
+import md5
+import random
+import string
 import goTenna # The goTenna API
 
 # For SPI connection only, set SPI_CONNECTION to true with proper SPI settings
@@ -39,7 +50,7 @@ class goTennaCLI(cmd.Cmd):
         self.api_thread = None
         self.status = {}
         cmd.Cmd.__init__(self)
-        self.prompt = 'goTenna>'
+        self.prompt = 'txTenna>'
         self.in_flight_events = {}
         self._set_frequencies = False
         self._set_tx_power = False
@@ -50,6 +61,7 @@ class goTennaCLI(cmd.Cmd):
             geo_settings=goTenna.settings.GeoSettings())
         self._do_encryption = True
         self._awaiting_disconnect_after_fw_update = [False]
+        self.messageIdx = 0
 
     def precmd(self, line):
         if not self.api_thread\
@@ -91,7 +103,7 @@ class goTennaCLI(cmd.Cmd):
         if evt.event_type == goTenna.driver.Event.MESSAGE:
             try:
                 print(str(evt))
-                self.do_handle_message(evt.message)
+                self.handle_message(evt.message)
             except Exception:
                 traceback.print_exc()
         elif evt.event_type == goTenna.driver.Event.DEVICE_PRESENT:
@@ -812,7 +824,7 @@ class goTennaCLI(cmd.Cmd):
                 print("Error updating firmware: {}: {}"
                       .format(details.get('code', 'unknown'),
                               details.get('msg', 'unknown')))
-            self.prompt = "goTenna>"
+            self.prompt = "txTenna>"
 
         last_progress = [0]
         print("")
@@ -878,27 +890,139 @@ class goTennaCLI(cmd.Cmd):
         except:
             traceback.print_exc()
 
-    def do_handle_message(self, message):
+    def handle_message(self, message):
         """ handle an incoming message
 
-        Usage: do_handle_message
+        Usage: handle_message
         """
         payload = str(message.payload.message)
-        headers = {u'content-type': u'application/json'}
-        ## url = "http://127.0.0.1:8091/segments" ## local txtenna-server
-        url = "https://api.samouraiwallet.com/v2/txtenna/segments" ## default txtenna-server
-        r = requests.post(url, headers= headers, data=payload)
-        print(r.text)
+        print("received transaction payload: " + payload)
 
         obj = json.loads(payload)
-        if 'i' in obj.keys() and not 'c' in obj.keys() :
-            print(obj['h'])
-            sender_gid = message.sender.gid_val
+        if 'b' in obj.keys() :
+            ## process incoming transaction confirmation from another server
+            if (obj['b'] > 0) :
+                print("Transaction " + obj['h'] + " confirmed in block " + obj['b'])
+            else :
+                print("Transaction " + obj['h'] + " added to the the mem pool")
 
-            ## check for confirmed transaction in a new thread
-            ## self.confirm_bitcoin_tx(obj['h'], sender_gid)
-            t = Thread(target=self.confirm_bitcoin_tx, args=(obj['h'], sender_gid,))
-            t.start()
+        else :
+            ## process incoming segment
+            headers = {u'content-type': u'application/json'}
+            ## url = "http://127.0.0.1:8091/segments" ## local txtenna-server
+            url = "https://api.samouraiwallet.com/v2/txtenna/segments" ## default txtenna-server
+            r = requests.post(url, headers= headers, data=payload)
+            print(r.text)
+
+            if 'i' in obj.keys() and not 'c' in obj.keys() :
+                print(obj['h'])
+                sender_gid = message.sender.gid_val
+
+                ## check for confirmed transaction in a new thread
+                ## self.confirm_bitcoin_tx(obj['h'], sender_gid)
+                t = Thread(target=self.confirm_bitcoin_tx, args=(obj['h'], sender_gid,))
+                t.start()
+
+    def do_broadcast_tx(self, rem):
+
+        (strHexTx, strHexTxHash, network) = rem.split(" ")
+        messages = self.tx_to_json(strHexTx, strHexTxHash, str(self.messageIdx), network, False)
+        for msg in messages :
+            _msg = "".join(msg.split()) ## strip whitespace
+            self.do_send_broadcast(_msg)
+            sleep(10)
+        self.messageIdx = (self.messageIdx+1) % 9999
+
+    def tx_to_json(self, strHexTx, strHexTxHash, messageIdx=0, network='m', isZ85=False):
+        ##
+        ## if Z85 encoding, use 24 extra characters for tx in segment0. Hash encoded on 40 characters instead of 64
+        ##
+        ## translated to python from txTenna app PayloadFactory.java : toJSON method
+        ##
+        ## JSON Parameters
+        ##    * **s** - `integer` - Number of segments for the transaction. Only used in the first segment for a given transaction.
+        ##    * **h** - `string` - Hash of the transaction. Only used in the first segment for a given transaction. May be Z85-encoded.
+        ##    * **n** - `char` (optional) - Network to use. 't' for TestNet3, otherwise assume MainNet. Only used in the first segment for a given transaction.
+        ##    * **i** - `string` - TxTenna unid identifying the transaction (8 bytes).
+        ##    * **c** - `integer` - Sequence number for this segment. May be omitted in first segment for a given transaction (assumed to be 0).
+        ##    * **t** - `string` - Hex transaction data for this segment. May be Z85-encoded.
+        ##    * **b** - `integer` - Block height of corresponding transaction hash. Will be 0 for mempool transactions.
+
+        segment0Len = 100  ## 110?
+        segment1Len = 180  ## 190?
+
+        tx_network = network
+
+        if isZ85 : 
+            segment0Len += 24
+
+        print("tx_to_json, hex tx:" + strHexTx)
+
+        strRaw = strHexTx
+        if isZ85 :
+            strRaw = z85.encode(strHexTx)
+            print("tx_to_json, hex tx Z85:" + strRaw)
+
+        seg_count = 0
+        if len(strRaw) <= segment0Len :
+            seg_count = 1
+        else :
+            length = len(strRaw)
+            length -= segment0Len
+            seg_count = 1
+            seg_count += (length / segment1Len)
+            if length % segment1Len > 0 :
+                seg_count += 1
+
+        tx_id = messageIdx
+
+        # a unique identifier for set of segments from a particular node
+        _id = str(self.api_thread.gid.gid_val) + "|" + str(messageIdx)
+
+        try :
+            buf = _id.decode("UTF-8")
+            md5_hash = md5.new(buf).digest()
+            idBytes = md5_hash[:8] ## first 8 bytes of md5 digest
+            if isZ85 :
+                tx_id = z85.encode(idBytes.encode("hex"))
+            else :
+                tx_id = idBytes.encode("hex")
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc()
+
+        ret = []
+        for seg_num in range(0, seg_count) :
+
+            ## Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+
+            if seg_num == 0 :
+                if isZ85 :
+                    tx_hash = z85.encode(strHexTxHash.decode("hex"))
+                else :
+                    tx_hash = strHexTxHash
+
+                seg_len = len(strRaw)
+                tx_seg = strRaw
+                if len(strRaw) > segment0Len :
+                    seg_len = segment0Len
+                    tx_seg = strRaw[:seg_len]
+                    strRaw = strRaw[seg_len:]
+                
+                rObj = json.dumps({'s': seg_count,'i': tx_id,'n': tx_network,'h': tx_hash,'t': tx_seg})
+                ret.append(rObj)
+
+            else :
+                seg_len = len(strRaw)
+                tx_seg = strRaw
+                if len(strRaw) > segment1Len :
+                    seg_len = segment1Len
+                    tx_seg = strRaw[:seg_len]
+                    strRaw = strRaw[seg_len:]
+
+                rObj = json.dumps({'c': seg_num,'i': tx_id,'t': tx_seg})
+                ret.append(rObj)
+
+        return ret
 
 def run_cli():
     """ The main function of the sample app.
@@ -906,6 +1030,24 @@ def run_cli():
     Instantiates a CLI object and runs it.
     """
     cli_obj = goTennaCLI()
+
+    import argparse
+    import six
+    import code
+    parser = argparse.ArgumentParser('Run a txTenna transaction gateway')
+    parser.add_argument('SDK_TOKEN', type=six.b,
+                        help='The token for the goTenna SDK')
+    parser.add_argument('GEO_REGION', type=six.b,
+                        help='The geo region number you are in')
+    args = parser.parse_args()  
+
+    cli_obj.do_sdk_token(args.SDK_TOKEN)
+    _gid = ''.join(random.SystemRandom().choice(string.digits) for _ in range(12))
+    cli_obj.do_set_gid(_gid)
+    cli_obj.do_set_geo_region(args.GEO_REGION)
+
+    ## broadcast_tx 01000000000101bf6c3ed233e8700b42c1369993c2078780015bab7067b9751b7f49f799efbffd0000000017160014f25dbf0eab0ba7e3482287ebb41a7f6d361de6efffffffff02204e00000000000017a91439cdb4242013e108337df383b1bf063561eb582687abb93b000000000017a9148b963056eedd4a02c91747ea667fc34548cab0848702483045022100e92ce9b5c91dbf1c976d10b2c5ed70d140318f3bf2123091d9071ada27a4a543022030c289d43298ca4ca9d52a4c85f95786c5e27de5881366d9154f6fe13a717f3701210204b40eff96588033722f487a52d39a345dc91413281b31909a4018efb330ba2600000000 94406beb94761fa728a2cde836ca636ecd3c51cbc0febc87a968cb8522ce7cc1 0 m
+
     try:
         cli_obj.cmdloop("Welcome to the goTenna API sample! "
                         "Press ? for a command list.\n"
