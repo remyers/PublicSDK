@@ -1,13 +1,5 @@
 """ txtenna.py - 
-Send a Bitcoin transactions using the txTenna json format with the broadcast_tx RAW_HEX TX_HASH NETWORK(m|t)
-Receive and confirm a transaction in the txTEnna json format using a remote (or local) txTenna-server. 
-
-This is a modified version of sample.py from the goTenna SDK.
-
-Usage: python txtenna.py SDK_TOKEN GEO_REGION
-
-txTenna> broadcast_tx 01000000000101bf6c3ed233e8700b42c1369993c2078780015bab7067b9751b7f49f799efbffd0000000017160014f25dbf0eab0ba7e3482287ebb41a7f6d361de6efffffffff02204e00000000000017a91439cdb4242013e108337df383b1bf063561eb582687abb93b000000000017a9148b963056eedd4a02c91747ea667fc34548cab0848702483045022100e92ce9b5c91dbf1c976d10b2c5ed70d140318f3bf2123091d9071ada27a4a543022030c289d43298ca4ca9d52a4c85f95786c5e27de5881366d9154f6fe13a717f3701210204b40eff96588033722f487a52d39a345dc91413281b31909a4018efb330ba2600000000 94406beb94761fa728a2cde836ca636ecd3c51cbc0febc87a968cb8522ce7cc1 m
-
+This code is derived from sample.py available from the goTenna Public SDK (https://github.com/gotenna/PublicSDK)
 """
 from __future__ import print_function
 import cmd # for the command line application
@@ -110,12 +102,12 @@ class goTennaCLI(cmd.Cmd):
         """
         if evt.event_type == goTenna.driver.Event.MESSAGE:
             try:
-                print(str(evt))
+                ## print(str(evt))
                 self.handle_message(evt.message)
             except Exception:
                 traceback.print_exc()
         elif evt.event_type == goTenna.driver.Event.DEVICE_PRESENT:
-            print(str(evt))
+            ## print(str(evt))
             if self._awaiting_disconnect_after_fw_update[0]:
                 print("Device physically connected")
             else:
@@ -203,146 +195,6 @@ class goTennaCLI(cmd.Cmd):
             return
         self.api_thread.set_gid(gid)
 
-    def do_create_group(self, rem):
-        """ Create a new group and send invitations to other members.
-
-        Usage create_group GIDs...
-
-        GIDs should be a list of the private GIDs of the other members of the group. The group will be created and stored on the connected goTenna and invitations will be sent to the other members.
-        """
-        if not self.api_thread.connected:
-            print("Must be connected when creating a group")
-            return
-        gids = [self.api_thread.gid]
-        while True:
-            (this_gid, rem) = self._parse_gid(rem,
-                                              goTenna.settings.GID.PRIVATE,
-                                              False)
-            if not this_gid:
-                break
-            gids.append(this_gid)
-        if len(gids) < 2:
-            print("The group must have at least one other member.")
-            return
-        group = goTenna.settings.Group.create_new(gids)
-        def _invite_callback(correlation_id, member_index,
-                             success=None, error=None, details=None):
-            if success:
-                msg = 'succeeded'
-                to_print = ''
-            elif error:
-                msg = 'failed'
-                to_print = ': ' + str(details)
-            print("Invitation of {} to {} {}{}".format(gids[member_index],
-                                                       group.gid.gid_val,
-                                                       msg, to_print))
-        def method_callback(correlation_id, success=None, results=None,
-                            error=None, details=None):
-            """ Custom callback for group creation
-            """
-            # pylint: disable=unused-argument
-            if success:
-                print("Group {} created!".format(group.gid.gid_val))
-            elif error:
-                print("Group {} could not be created: {}: {}"
-                      .format(group.gid.gid_val,
-                              details['code'], details['msg']))
-        print("Creating group {}".format(group.gid.gid_val))
-        corr_id = self.api_thread.add_group(group,
-                                            method_callback,
-                                            True,
-                                            _invite_callback)
-        self.in_flight_events[corr_id.bytes] = 'Group creation of {}'\
-            .format(group.gid.gid_val)
-
-    def do_resend_invite(self, rem):
-        """ Resend an invitation to a group to a specific member.
-
-        Usage resend_invite GROUP_GID MEMBER_GID
-
-        The GROUP_GID must be a previously-created group.
-        The MEMBER_GID must be a previously-specified member of the group.
-        """
-        if not self.api_thread.connected:
-            print("Must be connected when resending a group invite")
-            return
-        group_gid, rem = self._parse_gid(rem, goTenna.settings.GID.GROUP)
-        member_gid, rem = self._parse_gid(rem, goTenna.settings.GID.PRIVATE)
-        if not group_gid or not member_gid:
-            print("Must specify group GID and member GID to invite")
-            return
-        group_to_invite = None
-        for group in self.api_thread.groups:
-            if group.gid.gid_val == group_gid.gid_val:
-                group_to_invite = group
-                break
-        else:
-            print("No group found matching GID {}".format(group_gid.gid_val))
-            return
-        member_idx = None
-        for idx, member in enumerate(group_to_invite.members):
-            if member.gid_val == member_gid.gid_val:
-                member_idx = idx
-                break
-        else:
-            print("Group {} has no member {}".format(group_gid.gid_val,
-                                                     member_gid.gid_val))
-            return
-        def ack_callback(correlation_id, success):
-            if success:
-                print("Invitation of {} to {}: delivery confirmed"
-                      .format(member_gid.gid_val, group_gid.gid_val))
-            else:
-                print("Invitation of {} to {}: delivery unconfirmed, recipient may be offline or out of range"
-                      .format(member_gid.gid_val, group_gid.gid_val))
-        corr_id = self.api_thread.invite_to_group(group_to_invite, member_idx,
-                                                  self.build_callback(),
-                                                  ack_callback=ack_callback)
-        self.in_flight_events[corr_id.bytes] = 'Invitation of {} to {}'\
-            .format(group_gid.gid_val, member_gid.gid_val)
-
-    def do_remove_group(self, rem):
-        """ Remove a group.
-
-        Usage remove_group GROUP_GID
-
-        GROUP_GID should be a group GID.
-        """
-        if not self.api_thread.connected:
-            print("Must be connected when resending a group invite")
-            return
-        group_gid, rem = self._parse_gid(rem, goTenna.settings.GID.GROUP)
-
-        if not group_gid:
-            print("Must specify group GID to remove it")
-            return
-
-        group_to_remove = None
-        for group in self.api_thread.groups:
-            if group.gid.gid_val == group_gid.gid_val:
-                group_to_remove = group
-                break
-        else:
-            print("No group found matching GID {}".format(group_gid.gid_val))
-            return
-
-        def method_callback(correlation_id, success=None, results=None,
-                            error=None, details=None):
-            # logger.debug(" ")
-            """ Custom callback for group removal
-            """
-            # pylint: disable=unused-argument
-            if success:
-                print("Group {} removed!".format(group_to_remove.gid.gid_val))
-            elif error:
-                print("Group {} could not be removed: {}: {}"
-                      .format(group_gid.gid_val,
-                              details['code'], details['msg']))
-
-        corr_id = self.api_thread.remove_group(group, method_callback)
-        self.in_flight_events[corr_id.bytes] = 'Group removing of {}' \
-            .format(group_gid.gid_val)
-
     def do_quit(self, arg):
         """ Safely quit.
 
@@ -352,30 +204,6 @@ class goTennaCLI(cmd.Cmd):
         if self.api_thread:
             self.api_thread.join()
         sys.exit()
-
-    def do_echo(self, rem):
-        """ Send an echo command
-
-        Usage: echo
-        """
-        if not self.api_thread.connected:
-            print("No device connected")
-        else:
-            def error_handler(details):
-                """ A special error handler for formatting message failures
-                """
-                if details['code'] in [goTenna.constants.ErrorCodes.TIMEOUT,
-                                       goTenna.constants.ErrorCodes.OSERROR]:
-                    return "Echo command may not have been sent: USB connection disrupted"
-                return "Error sending echo command: {}".format(details)
-
-            try:
-                method_callback = self.build_callback(error_handler)
-                corr_id = self.api_thread.echo(method_callback)
-            except ValueError:
-                print("Echo failed!")
-                return
-            self.in_flight_events[corr_id.bytes] = 'Echo Send'
 
     def do_send_broadcast(self, message):
         """ Send a broadcast message
@@ -401,86 +229,6 @@ class goTennaCLI(cmd.Cmd):
                 print("Message too long!")
                 return
             self.in_flight_events[corr_id.bytes] = 'Broadcast message: {}'.format(message)
-
-    def do_send_emergency(self, message):
-        """ Send an emergency message
-
-        Usage: send_emergency MESSAGE
-        """
-        if not self.api_thread.connected:
-            print("No device connected")
-        else:
-            def error_handler(details):
-                """ A special error handler for formatting message failures
-                """
-                if details['code'] in [goTenna.constants.ErrorCodes.TIMEOUT,
-                                       goTenna.constants.ErrorCodes.OSERROR]:
-                    return "Message may not have been sent: USB connection disrupted"
-                return "Error sending message: {}".format(details)
-
-            try:
-                method_callback = self.build_callback(error_handler)
-                payload = goTenna.payload.TextPayload(message)
-                corr_id = self.api_thread.send_emergency(payload,
-                                                         method_callback)
-            except ValueError:
-                print("Message too long!")
-                return
-            self.in_flight_events[corr_id.bytes] = 'Emergency message: {}'.format(message)
-
-    def do_set_emergency_message(self, message):
-        """ Set an emergency message. This message will be used when enabling the emergency beacon.
-
-        Usage: set_emergency MESSAGE
-
-        """
-        if not self.api_thread.connected:
-            print("No device connected")
-        else:
-            def error_handler(details):
-                """ A special error handler for formatting message failures
-                """
-                if details['code'] in [goTenna.constants.ErrorCodes.TIMEOUT,
-                                       goTenna.constants.ErrorCodes.OSERROR]:
-                    return "Message may not have been sent: USB connection disrupted"
-                return "Error sending message: {}".format(details)
-
-            try:
-                method_callback = self.build_callback(error_handler)
-                payload = goTenna.payload.TextPayload(message)
-                corr_id = self.api_thread.set_emergency_message(payload,
-                                                                method_callback)
-            except ValueError:
-                print("Message too long!")
-                return
-            self.in_flight_events[corr_id.bytes] = 'Set emergency message: {}'.format(message)
-
-    def do_set_emergency_beacon(self, enabled):
-        """ Enable or disable an emergency beacon
-
-        Usage: 
-            enable emergency beacon: set_emergency_beacon 1
-            disable emergency beacon: set_emergency_beacon 0
-        """
-        if not self.api_thread.connected:
-            print("No device connected")
-        else:
-            def error_handler(details):
-                """ A special error handler for formatting message failures
-                """
-                if details['code'] in [goTenna.constants.ErrorCodes.TIMEOUT,
-                                       goTenna.constants.ErrorCodes.OSERROR]:
-                    return "Message may not have been sent: USB connection disrupted"
-                return "Error sending message: {}".format(details)
-
-            try:
-                method_callback = self.build_callback(error_handler)
-                corr_id = self.api_thread.set_emergency_beacon(enabled,
-                                                               method_callback)
-            except:
-                print("Error settting emrgency beacon!")
-                return
-            self.in_flight_events[corr_id.bytes] = 'Emergency beacon: {}'.format(enabled)
 
     @staticmethod
     def _parse_gid(line, gid_type, print_message=True):
@@ -541,145 +289,8 @@ class goTennaCLI(cmd.Cmd):
         self.in_flight_events[corr_id.bytes]\
             = 'Private message to {}: {}'.format(gid.gid_val, message)
 
-    def do_send_group(self, rem):
-        """ Send a message to a group.
-
-        Usage: send_group GROUP_GID MESSAGE
-
-        GROUP_GID is the GID of the group to send the message to. This must have been previously loaded into the API, whether by receiving an invitation, using add_group, or using create_group.
-        """
-        if not self.api_thread.connected:
-            print("Must connect first.")
-            return
-        (gid, rest) = self._parse_gid(rem, goTenna.settings.GID.GROUP)
-        if not gid:
-            return
-        message = rest
-        group = None
-        for group in self.api_thread.groups:
-            if gid.gid_val == group.gid.gid_val:
-                group = group
-                break
-        else:
-            print("Group {} is not known".format(gid.gid_val))
-            return
-        try:
-            payload = goTenna.payload.TextPayload(message)
-            corr_id = self.api_thread.send_group(group, payload,
-                                                 self.build_callback(),
-                                                 encrypt=self._do_encryption)
-        except ValueError:
-            print("message too long!")
-            return
-        self.in_flight_events[corr_id.bytes] = 'Group message to {}: {}'\
-            .format(group.gid.gid_val, message)
-
     def get_device_type(self):
         return self.api_thread.device_type
-
-    def do_set_transmit_power(self, rem):
-        """ Set the transmit power of the device.
-
-        Usage: set_transmit_power POWER
-
-        POWER should be a string, one of 'HALF_W', 'ONE_W', 'TWO_W' or 'FIVE_W'
-        """
-        if self.get_device_type() == "900":
-             print("This configuration cannot be done for Mesh devices.")
-             return
-        ok_args = [attr
-                   for attr in dir(goTenna.constants.POWERLEVELS)
-                   if attr.endswith('W')]
-        if rem.strip() not in ok_args:
-            print("Invalid power setting {}".format(rem))
-            return
-        power = getattr(goTenna.constants.POWERLEVELS, rem.strip())
-        self._set_tx_power = True
-        self._settings.rf_settings.power_enum = power
-        self._maybe_update_rf_settings()
-
-    def do_list_bandwidth(self, rem):
-        """ List the available bandwidth.
-
-        Usage: list_bandwidth
-        """
-        print("Allowed bandwidth in kHz: {}"
-                .format(str(goTenna.constants.BANDWIDTH_KHZ[0].allowed_bandwidth)))
-
-    def do_set_bandwidth(self, rem):
-        """ Set the bandwidth for the device.
-
-        Usage: set_bandwidth BANDWIDTH
-
-        BANDWIDTH should be a bandwidth in kHz.
-
-        Allowed bandwidth can be displayed with list_bandwidth.
-        """
-        if self.get_device_type() == "900":
-            print("This configuration cannot be done for Mesh devices.")
-            return
-        bw_val = float(rem.strip())
-        for bw in goTenna.constants.BANDWIDTH_KHZ:
-            if bw.bandwidth == bw_val:
-                bandwidth = bw
-                break
-        else:
-            print("{} is not a valid bandwidth".format(bw_val))
-            return
-        self._settings.rf_settings.bandwidth = bandwidth
-        self._set_bandwidth = True
-        self._maybe_update_rf_settings()
-
-    def _maybe_update_rf_settings(self):
-        if self._set_tx_power\
-           and self._set_frequencies\
-           and self._set_bandwidth:
-            self.api_thread.set_rf_settings(self._settings.rf_settings)
-
-    def do_set_frequencies(self, rem):
-        """ Configure the frequencies the device will use.
-
-        Usage: set_frequencies CONTROL_FREQ DATA_FREQS....
-
-        All arguments should be frequencies in Hz. The first argument will be used as the control frequency. Subsequent arguments will be data frequencies.
-        """
-        freqs = rem.split(' ')
-        if len(freqs) < 2:
-            print("At least one control frequency and one data frequency are required")
-            return
-        def _check_bands(freq):
-            bad = True
-            for band in goTenna.constants.BANDS:
-                if freq >= band[0] and freq <= band[1]:
-                    bad = False
-            return bad
-
-        if self.get_device_type() == "900":
-            print("This configuration cannot be done for Mesh devices.")
-            return
-        try:
-            control_freq = int(freqs[0])
-        except ValueError:
-            print("Bad control freq {}".format(freqs[0]))
-            return
-        if _check_bands(control_freq):
-            print("Control freq out of range")
-            return
-        data_freqs = []
-        for idx, freq in enumerate(freqs[1:]):
-            try:
-                converted_freq = int(freq)
-            except ValueError:
-                print("Data frequency {}: {} is bad".format(idx, freq))
-                return
-            if _check_bands(converted_freq):
-                print("Data frequency {}: {} is out of range".format(idx, freq))
-                return
-            data_freqs.append(converted_freq)
-        self._settings.rf_settings.control_freqs = [control_freq]
-        self._settings.rf_settings.data_freqs = data_freqs
-        self._set_frequencies = True
-        self._maybe_update_rf_settings()
 
     def do_list_geo_region(self, rem):
         """ List the available region.
@@ -735,121 +346,6 @@ class goTennaCLI(cmd.Cmd):
         else:
             print("MESH - Geo region: Not Set")
 
-
-    def do_list_groups(self, arg):
-        """ List the known groups """
-        if not self.api_thread:
-            print("The SDK must be configured first.")
-            return
-        if not self.api_thread.groups:
-            print("No known groups.")
-            return
-        for group in self.api_thread.groups:
-            print("Group GID {}: Other members {}"
-                  .format(group.gid.gid_val,
-                          ', '.join([str(m.gid_val)
-                                     for m in group.members
-                                     if m != self.api_thread.gid])))
-
-    @staticmethod
-    def _version_from_path(path):
-        name = os.path.basename(path)
-        parts = name.split('.')
-        if len(parts) < 3:
-            return None
-        return (int(parts[0]),
-                int(parts[1]),
-                int(parts[2]))
-
-    @staticmethod
-    def _parse_version(args):
-        version_part = args.split('.')
-        if len(version_part) < 3:
-            return None, args
-        return (int(version_part[0]),
-                int(version_part[1]),
-                int(version_part[2])),\
-                '.'.join(version_part[3:])
-
-    @staticmethod
-    def _parse_file(args):
-        remainder = ''
-        if '"' in args:
-            parts = args.split('"')
-            firmware_file = parts[1]
-            remainder = '"'.join(parts[2:])
-        else:
-            parts = args.split(' ')
-            firmware_file = parts[0]
-            remainder = ' '.join(parts[1:])
-        if not os.path.exists(firmware_file):
-            return None, args
-        return firmware_file, remainder
-
-    def do_firmware_update(self, args):
-        """ Update the device firmware.
-
-        Usage: firmware_update FIRMWARE_FILE [VERSION]
-        FIRMWARE_FILE should be the path to a binary firmware. Files or paths containing spaces should be specified in quotes.
-        VERSION is an optional dotted version string. The first three dotted segments will determine the version stored in the firmware. If this argument is not passed, the command will try to deduce the version from the filename. If this deduction fails, the command aborts.
-        """
-        if not self.api_thread.connected:
-            print("Device must be connected.")
-            return
-        firmware_file, rem = self._parse_file(args)
-        if not firmware_file:
-            print("Cannot find file {}".format(args))
-            return
-        try:
-            version = self._version_from_path(firmware_file)
-        except ValueError:
-            version = None
-        if not version:
-            try:
-                version, _ = self._parse_version(rem)
-            except ValueError:
-                print("Version must be 3 numbers separated by '.'")
-                return
-            if not version:
-                print("Version must be specified when not in the filename")
-                return
-        try:
-            open(firmware_file, 'rb').close()
-        except (IOError, OSError) as caught_exc:
-            print("Cannot open file {}: {}: {}"
-                  .format(firmware_file, caught_exc.errno, caught_exc.strerror))
-            return
-        else:
-            print("File {} OK".format(firmware_file))
-            print("Beginning firmware update")
-
-        def _callback(correlation_id,
-                      success=None, error=None, details=None, results=None):
-            # pylint: disable=unused-argument
-            if success:
-                print("Firmware updated!")
-            elif error:
-                print("Error updating firmware: {}: {}"
-                      .format(details.get('code', 'unknown'),
-                              details.get('msg', 'unknown')))
-            self.prompt = "txTenna>"
-
-        last_progress = [0]
-        print("")
-        def _progress_callback(progress, **kwargs):
-            percentage = int(progress*100)
-            if percentage/10 != last_progress[0]/10:
-                last_progress[0] = percentage
-                print("FW Update Progress: {: 3}%.".format(percentage))
-                if last_progress[0] >= 90:
-                    self._awaiting_disconnect_after_fw_update[0] = True
-                if last_progress[0] >= 100:
-                    print("Device will disconnect and reconnect when update complete.")
-
-        self.prompt = "(updating firmware)"
-        self.api_thread.update_firmware(firmware_file, _callback,
-                                        _progress_callback, version)
-
     def do_get_system_info(self, args):
         """ Get system information.
 
@@ -860,12 +356,12 @@ class goTennaCLI(cmd.Cmd):
         print(self.api_thread.system_info)
 
     def confirm_bitcoin_tx(self, hash, sender_gid):
-        """ handle an incoming message
+        """ confirm bitcoin transaction using local (or remote) txtenna-server instance
 
         Usage: confirm_bitcoin_tx json gid
         """
         url = "http://127.0.0.1:8091/tx" + hash ## local txtenna-server
-        ##url = "https://api.samourai.io/v2/tx/" + hash ## default txtenna-server
+        ## url = "https://api.samourai.io/v2/tx/" + hash ## default txtenna-server
         
         try:
             r = requests.get(url)
@@ -899,12 +395,12 @@ class goTennaCLI(cmd.Cmd):
             traceback.print_exc()
 
     def handle_message(self, message):
-        """ handle an incoming message
+        """ handle a txtenna message received over the mesh network
 
-        Usage: handle_message
+        Usage: handle_message message
         """
         payload = str(message.payload.message)
-        print("received transaction payload: " + payload)
+        ## print("received transaction payload: " + payload)
 
         obj = json.loads(payload)
         if 'b' in obj.keys() :
@@ -931,8 +427,17 @@ class goTennaCLI(cmd.Cmd):
                 t = Thread(target=self.confirm_bitcoin_tx, args=(obj['h'], sender_gid,))
                 t.start()
 
-    def do_broadcast_tx(self, rem):
+    def do_mesh_broadcast_rawtx(self, rem):
+        """ 
+        Broadcast the raw hex of a Bitcoin transaction and its transaction ID over mainnet or testnet. 
+        A local copy of txtenna-server must be configured to support the selected network.
 
+        Usage: mesh_broadcast_tx RAW_HEX TX_ID NETWORK(m|t)
+
+        eg. txTenna> mesh_broadcast_rawtx 01000000000101bf6c3ed233e8700b42c1369993c2078780015bab7067b9751b7f49f799efbffd0000000017160014f25dbf0eab0ba7e3482287ebb41a7f6d361de6efffffffff02204e00000000000017a91439cdb4242013e108337df383b1bf063561eb582687abb93b000000000017a9148b963056eedd4a02c91747ea667fc34548cab0848702483045022100e92ce9b5c91dbf1c976d10b2c5ed70d140318f3bf2123091d9071ada27a4a543022030c289d43298ca4ca9d52a4c85f95786c5e27de5881366d9154f6fe13a717f3701210204b40eff96588033722f487a52d39a345dc91413281b31909a4018efb330ba2600000000 94406beb94761fa728a2cde836ca636ecd3c51cbc0febc87a968cb8522ce7cc1 m
+        """
+
+        ## TODO: test Z85 compression and add as an option
         (strHexTx, strHexTxHash, network) = rem.split(" ")
         messages = self.tx_to_json(strHexTx, strHexTxHash, str(self.messageIdx), network, False)
         for msg in messages :
@@ -945,7 +450,7 @@ class goTennaCLI(cmd.Cmd):
         ##
         ## if Z85 encoding, use 24 extra characters for tx in segment0. Hash encoded on 40 characters instead of 64
         ##
-        ## translated to python from txTenna app PayloadFactory.java : toJSON method
+        ## This method translated to python from txTenna app PayloadFactory.java : toJSON method
         ##
         ## JSON Parameters
         ##    * **s** - `integer` - Number of segments for the transaction. Only used in the first segment for a given transaction.
@@ -964,12 +469,9 @@ class goTennaCLI(cmd.Cmd):
         if isZ85 : 
             segment0Len += 24
 
-        print("tx_to_json, hex tx:" + strHexTx)
-
         strRaw = strHexTx
         if isZ85 :
             strRaw = z85.encode(strHexTx)
-            print("tx_to_json, hex tx Z85:" + strRaw)
 
         seg_count = 0
         if len(strRaw) <= segment0Len :
@@ -1032,23 +534,25 @@ class goTennaCLI(cmd.Cmd):
 
         return ret
 
-    def do_getbalance(self, rem) :
+    def do_rpc_getbalance(self, rem) :
+        """
+        Call local Bitcoin RPC method 'getbalance'
+
+        Usage: rpc_getbalance
+        """
         try :
             proxy = bitcoin.rpc.Proxy()
             balance = proxy.getbalance()
             print("getbalance: " + str(balance))
         except Exception: # pylint: disable=broad-except
-            traceback.print_exc()
+            traceback.print_exc()     
 
-    def do_getrawtransaction(self, txid) :
-        try :
-            proxy = bitcoin.rpc.Proxy()
-            r = proxy.getrawtransaction(txid)
-            print("getrawtransaction(: " + str(r))
-        except Exception: # pylint: disable=broad-except
-            traceback.print_exc()        
+    def do_rpc_sendrawtransaction(self, hex) :
+        """
+        Call local Bitcoin RPC method 'sendrawtransaction'
 
-    def do_sendrawtransaction(self, hex) :
+        Usage: rpc_sendrawtransaction RAW_TX_HEX
+        """
         try :
             proxy = bitcoin.rpc.Proxy()
             r = proxy.sendrawtransaction(hex)
@@ -1056,7 +560,12 @@ class goTennaCLI(cmd.Cmd):
         except Exception: # pylint: disable=broad-except
             traceback.print_exc()
 
-    def do_sendtoaddress(self, rem) :
+    def do_rpc_sendtoaddress(self, rem) :
+        """
+        Call local Bitcoin RPC method 'sendtoaddress'
+
+        Usage: rpc_sendtoaddress ADDRESS SATS
+        """
         try:
             proxy = bitcoin.rpc.Proxy()
             (addr, amount) = rem.split()
@@ -1065,10 +574,18 @@ class goTennaCLI(cmd.Cmd):
         except Exception: # pylint: disable=broad-except
             traceback.print_exc() 
 
-    def do_sendtoaddress_mesh(self, rem) :
+    def do_mesh_sendtoaddress(self, rem) :
+        """ 
+        Create a signed transaction and broadcast it over the connected mesh device. The transaction 
+        spends some amount of satoshis to the specified address from the local bitcoind wallet and selected network. 
+
+        Usage: mesh_sendtoaddress ADDRESS SATS NETWORK(m|t)
+
+        eg. txTenna> mesh_sendtoaddress 2N4BtwKZBU3kXkWT7ZBEcQLQ451AuDWiau2 13371337 t
+        """
         try:
             proxy = bitcoin.rpc.Proxy()
-            (addr, sats) = rem.split()
+            (addr, sats, network) = rem.split()
 
             # Create the txout. This time we create the scriptPubKey from a Bitcoin
             # address.
@@ -1080,10 +597,10 @@ class goTennaCLI(cmd.Cmd):
             signed_transaction = proxy.signrawtransaction(funded_transaction["tx"])
             txhex = b2x(signed_transaction["tx"].serialize())
             txid = b2lx(signed_transaction["tx"].GetTxid())
-            print("sendtoaddress_mesh (tx, txid): " + txhex + ", " + txid)
+            print("sendtoaddress_mesh (tx, txid, network): " + txhex + ", " + txid, ", " + network)
 
             # broadcast over mesh
-            self.do_broadcast_tx( txhex + " " + txid + " t")
+            self.do_mesh_broadcast_rawtx( txhex + " " + txid + " " + network)
 
         except Exception: # pylint: disable=broad-except
             traceback.print_exc()
@@ -1103,7 +620,8 @@ class goTennaCLI(cmd.Cmd):
             print("RPC timeout after calling lockunspent")
 
 def run_cli():
-    """ The main function of the sample app.
+    """
+    The main function of the sample app.
 
     Instantiates a CLI object and runs it.
     """
@@ -1120,11 +638,15 @@ def run_cli():
     args = parser.parse_args()  
 
     cli_obj.do_sdk_token(args.SDK_TOKEN)
-    _gid = ''.join(random.SystemRandom().choice(string.digits) for _ in range(12))
-    cli_obj.do_set_gid(_gid)
-    cli_obj.do_set_geo_region(args.GEO_REGION)
 
-    ## broadcast_tx 01000000000101bf6c3ed233e8700b42c1369993c2078780015bab7067b9751b7f49f799efbffd0000000017160014f25dbf0eab0ba7e3482287ebb41a7f6d361de6efffffffff02204e00000000000017a91439cdb4242013e108337df383b1bf063561eb582687abb93b000000000017a9148b963056eedd4a02c91747ea667fc34548cab0848702483045022100e92ce9b5c91dbf1c976d10b2c5ed70d140318f3bf2123091d9071ada27a4a543022030c289d43298ca4ca9d52a4c85f95786c5e27de5881366d9154f6fe13a717f3701210204b40eff96588033722f487a52d39a345dc91413281b31909a4018efb330ba2600000000 94406beb94761fa728a2cde836ca636ecd3c51cbc0febc87a968cb8522ce7cc1 0 m
+    ## set geo region
+    cli_obj.do_set_geo_region(args.GEO_REGION)
+    
+    ## set new random GID every time the server starts
+    _gid = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(12))
+    _gid_int = int(_gid, 16)
+    cli_obj.do_set_gid(str(_gid_int))
+    print("gid=",str(_gid_int))
 
     try:
         cli_obj.cmdloop("Welcome to the goTenna API sample! "
