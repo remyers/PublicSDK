@@ -43,6 +43,14 @@ try:
 except ImportError:
     pass
 
+# Import support for bitcoind RPC interface
+import bitcoin
+import bitcoin.rpc
+from bitcoin.core import b2x, b2lx, CMutableTxOut, CMutableTransaction
+from bitcoin.wallet import CBitcoinAddress
+bitcoin.SelectParams('testnet')
+
+
 class goTennaCLI(cmd.Cmd):
     """ CLI handler function
     """
@@ -856,8 +864,8 @@ class goTennaCLI(cmd.Cmd):
 
         Usage: confirm_bitcoin_tx json gid
         """
-        ## url = "http://127.0.0.1:8091/tx" + hash ## local txtenna-server
-        url = "https://api.samourai.io/v2/tx/" + hash ## default txtenna-server
+        url = "http://127.0.0.1:8091/tx" + hash ## local txtenna-server
+        ##url = "https://api.samourai.io/v2/tx/" + hash ## default txtenna-server
         
         try:
             r = requests.get(url)
@@ -902,15 +910,15 @@ class goTennaCLI(cmd.Cmd):
         if 'b' in obj.keys() :
             ## process incoming transaction confirmation from another server
             if (obj['b'] > 0) :
-                print("Transaction " + obj['h'] + " confirmed in block " + obj['b'])
+                print("Transaction " + obj['h'] + " confirmed in block " + str(obj['b']))
             else :
                 print("Transaction " + obj['h'] + " added to the the mem pool")
 
         else :
             ## process incoming segment
             headers = {u'content-type': u'application/json'}
-            ## url = "http://127.0.0.1:8091/segments" ## local txtenna-server
-            url = "https://api.samouraiwallet.com/v2/txtenna/segments" ## default txtenna-server
+            url = "http://127.0.0.1:8091/segments" ## local txtenna-server
+            ## url = "https://api.samouraiwallet.com/v2/txtenna/segments" ## default txtenna-server
             r = requests.post(url, headers= headers, data=payload)
             print(r.text)
 
@@ -1023,6 +1031,76 @@ class goTennaCLI(cmd.Cmd):
                 ret.append(rObj)
 
         return ret
+
+    def do_getbalance(self, rem) :
+        try :
+            proxy = bitcoin.rpc.Proxy()
+            balance = proxy.getbalance()
+            print("getbalance: " + str(balance))
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc()
+
+    def do_getrawtransaction(self, txid) :
+        try :
+            proxy = bitcoin.rpc.Proxy()
+            r = proxy.getrawtransaction(txid)
+            print("getrawtransaction(: " + str(r))
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc()        
+
+    def do_sendrawtransaction(self, hex) :
+        try :
+            proxy = bitcoin.rpc.Proxy()
+            r = proxy.sendrawtransaction(hex)
+            print("sendrawtransaction: " + str(r))
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc()
+
+    def do_sendtoaddress(self, rem) :
+        try:
+            proxy = bitcoin.rpc.Proxy()
+            (addr, amount) = rem.split()
+            r = proxy.sendtoaddress(addr, amount)
+            print("sendtoaddress, transaction id: " + str(r["hex"]))
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc() 
+
+    def do_sendtoaddress_mesh(self, rem) :
+        try:
+            proxy = bitcoin.rpc.Proxy()
+            (addr, sats) = rem.split()
+
+            # Create the txout. This time we create the scriptPubKey from a Bitcoin
+            # address.
+            txout = CMutableTxOut(sats, CBitcoinAddress(addr).to_scriptPubKey())
+
+            # Create the unsigned transaction.
+            unfunded_transaction = CMutableTransaction([], [txout])
+            funded_transaction = proxy.fundrawtransaction(unfunded_transaction)
+            signed_transaction = proxy.signrawtransaction(funded_transaction["tx"])
+            txhex = b2x(signed_transaction["tx"].serialize())
+            txid = b2lx(signed_transaction["tx"].GetTxid())
+            print("sendtoaddress_mesh (tx, txid): " + txhex + ", " + txid)
+
+            # broadcast over mesh
+            self.do_broadcast_tx( txhex + " " + txid + " t")
+
+        except Exception: # pylint: disable=broad-except
+            traceback.print_exc()
+
+        try :
+            # lock UTXOs used to fund the tx if broadcast successful
+            vin_outpoints = set()
+            for txin in funded_transaction["tx"].vin:
+                vin_outpoints.add(txin.prevout)
+            ## json_outpoints = [{'txid':b2lx(outpoint.hash), 'vout':outpoint.n}
+            ##              for outpoint in vin_outpoints]
+            ## print(str(json_outpoints))
+            proxy.lockunspent(False, vin_outpoints)
+            
+        except Exception: # pylint: disable=broad-except
+            ## TODO: figure out why this is happening
+            print("RPC timeout after calling lockunspent")
 
 def run_cli():
     """ The main function of the sample app.
